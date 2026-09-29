@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "Scan History",
+    "subtitle": "Click a completed scan to view its report · Results are kept for 1 month",
+    "newScan": "New Scan"
+  },
+  "filter": {
+    "all": "All"
+  },
+  "search": {
+    "placeholder": "Search target"
+  },
+  "status": {
+    "done": "Done",
+    "running": "Running",
+    "pending": "Pending",
+    "failed": "Failed"
+  },
+  "list": {
+    "loadError": "Couldn't load scan history. Please check your connection to the backend.",
+    "retry": "Retry",
+    "emptyFiltered": "No scans match your filters.",
+    "emptyAll": "No scans yet.",
+    "startFirst": "Start your first scan →",
+    "item": {
+      "vulnCount": "· {{count}} vulnerabilities",
+      "lines": "· {{count}} lines",
+      "deleteAriaLabel": "Delete scan record"
+    }
+  },
+  "pagination": {
+    "totalLabel": "Total",
+    "totalSuffix": " results",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "toast": {
+    "deleteSuccess": "Scan record deleted",
+    "deleteFail": "Failed to delete. Please try again shortly."
+  },
+  "deleteModal": {
+    "title": "Delete Scan Record",
+    "body": "will have its scan record and vulnerabilities permanently deleted. This action can't be undone.",
+    "cancel": "Cancel",
+    "confirm": "Delete"
+  }
+}

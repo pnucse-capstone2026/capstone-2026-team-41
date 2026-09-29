@@ -1,0 +1,32 @@
+{
+  "greeting": "안녕하세요, {{name}}님",
+  "subtitle": "오늘도 안전하게. 최근 보안 현황을 확인하세요.",
+  "newScan": "새 스캔 시작",
+  "usage": {
+    "dastLabel": "DAST 웹 스캔 잔여",
+    "sastLabel": "SAST · GitHub 액션 잔여",
+    "unitCount": "회",
+    "unitLines": "줄",
+    "perMonth": " / 월 {{limit}}{{unit}}",
+    "low": "얼마 안 남음"
+  },
+  "tokenStatus": {
+    "title": "토큰 현황",
+    "myPage": "마이페이지"
+  },
+  "engine": {
+    "title": "ScanOps 엔진",
+    "desc": "Java는 Joern CPG와 Qwen3.8-Max로, 다른 언어는 기존 분석 엔진으로 검사해요.",
+    "externalLabel": "Java 의미 검토",
+    "externalValue": "DashScope",
+    "methodLabel": "탐지 방식",
+    "methodValue": "하이브리드"
+  },
+  "recent": {
+    "title": "최근 스캔",
+    "viewAll": "전체 보기",
+    "done": "완료",
+    "failed": "실패",
+    "inProgress": "진행 중"
+  }
+}

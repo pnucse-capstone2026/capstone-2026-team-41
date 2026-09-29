@@ -1,0 +1,27 @@
+[
+  {
+    "path": "docs/01.보고서/03.최종보고서.pdf",
+    "source_filename": "2026전기_최종보고서_41_이세혜_CPG,LLM 및 CVSS 기반 자동화된 웹 취약점 진단 파이프라인.pdf",
+    "sha256": "5a638c9eb3c1a15f1a1c35338c37356db9ae90c1391bf342df7547fe5169e8ea"
+  },
+  {
+    "path": "docs/01.보고서/02.중간보고서.pdf",
+    "source_filename": "중간보고서_41_이세혜.pdf",
+    "sha256": "87362a1a1d1e3e4841efd4103ae37d27328e2289a30b92a98edb89af0abae879"
+  },
+  {
+    "path": "docs/02.포스터/포스터파일.pdf",
+    "source_filename": "2026포스터_41_이세혜_01077223694.pdf",
+    "sha256": "8a99195761503b12d8d37166bedc620b5ce21e059b9c3b79fae6bf1265a5d130"
+  },
+  {
+    "path": "docs/03.발표자료/발표자료.pdf",
+    "source_filename": "ScanOps_D분과_형식유지_시각화.pdf",
+    "sha256": "c81cd46ef4dc22c396d5c9a29e0e3da12f2c89de084743e1dc1eef59ad829896"
+  },
+  {
+    "path": "docs/03.발표자료/발표자료.pptx",
+    "source_filename": "ScanOps_D분과_형식유지_시각화.pptx",
+    "sha256": "5c2f348a8f3587772a3f6069e0908daaa36929d8adcd8a4f5ef2c8d9cf55b605"
+  }
+]

@@ -1,0 +1,7 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile.zap"
+
+[deploy]
+healthcheckTimeout = 300
+restartPolicyType = "always"

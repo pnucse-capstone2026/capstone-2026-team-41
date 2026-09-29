@@ -1,0 +1,98 @@
+# ScanOps V17 — AWS/CPU 서버용 docker-compose (GPU는 RunPod Serverless로 분리)
+# ============================================================
+# 변경점 (docker-compose.aws.yml 대비):
+#   - ollama·qdrant 컨테이너 제거. model-server=api_v17(v13∨v16.1 앙상블), LLM은 RunPod
+#   - .env.aws 에 RUNPOD_ENDPOINT_ID / RUNPOD_API_KEY 추가 필요
+#   - ZAP은 동시 스캔 부하 격리를 위해 기본 미기동(profile) — 별도 c5.large에서 운영,
+#     백엔드 EC2에서는 ZAP_HOST=http://<zap사설IP>:8090 으로 연결 (기존 구조 유지)
+#
+# 사용법:
+#   [백엔드 EC2 (t3.medium)]  backend + model-server + postgres:
+#     docker compose -f docker-compose.v17.yml --env-file .env.aws up -d --build
+#   [올인원으로 쓸 때만]  zap까지 같이:
+#     docker compose -f docker-compose.v17.yml --profile zap-local --env-file .env.aws up -d --build
+#     (이 경우 ZAP_HOST=http://zap:8090)
+
+services:
+  backend:
+    build:
+      context: ../scanops-backend
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8080
+      JDBC_DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-scanops}
+      PGUSER: ${POSTGRES_USER:-scanops}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      # ⚠️ ddl-auto를 오버라이드하지 않음 — feat/db-redesign은 Flyway가 스키마 소유(validate).
+      # 강제로 update를 넣으면 Flyway 스키마와 충돌(scan_id 등 관계컬럼 누락). 브랜치 기본값 존중.
+      SCANOPS_MODEL_URL: http://model-server:8100
+      SCANOPS_API_KEY: ${SCANOPS_API_KEY}
+      # ZAP 분리 운영: c5.large의 사설 IP (올인원이면 http://zap:8090)
+      ZAP_HOST: ${ZAP_HOST:-http://zap:8090}
+      ZAP_API_KEY: ${ZAP_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      CLAUDE_API_KEY: ${CLAUDE_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GITHUB_APP_ID: ${GITHUB_APP_ID:-}
+      GITHUB_APP_PRIVATE_KEY: ${GITHUB_APP_PRIVATE_KEY:-}
+      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET:-}
+      # GitHub OAuth 로그인 (없으면 부팅 실패: "Client id must not be empty")
+      GITHUB_OAUTH_CLIENT_ID: ${GITHUB_OAUTH_CLIENT_ID}
+      GITHUB_OAUTH_CLIENT_SECRET: ${GITHUB_OAUTH_CLIENT_SECRET}
+      GITHUB_OAUTH_REDIRECT_URI: ${GITHUB_OAUTH_REDIRECT_URI:-https://scanops-backend.kr/login/oauth2/code/github}
+      # GitHub API 토큰(레포 파일 조회) — 없으면 private 레포가 404로 스캔 실패
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+      # OAuth 로그인 성공 후 리다이렉트할 프론트 주소 (미설정 시 localhost:5173로 깨짐)
+      FRONTEND_URL: ${FRONTEND_URL}
+    ports:
+      - "8080:8080"
+    depends_on: [postgres, model-server]   # zap은 별도 인스턴스(또는 --profile zap-local)
+    networks: [scanops-net]
+    restart: unless-stopped
+
+  # ── 모델 API (FastAPI api_v17) — CPU 전용, LLM은 RunPod ────────────────
+  model-server:
+    build:
+      context: ../scanops-model
+      dockerfile: Dockerfile.v17
+    environment:
+      PORT: 8100
+      SCANOPS_API_KEY: ${SCANOPS_API_KEY}
+      # ★ GPU 호출 라우팅 — 두 값이 있으면 RunPod, 없으면 로컬 Ollama 시도
+      RUNPOD_ENDPOINT_ID: ${RUNPOD_ENDPOINT_ID}
+      RUNPOD_API_KEY: ${RUNPOD_API_KEY}
+      RUNPOD_TIMEOUT: ${RUNPOD_TIMEOUT:-180}
+      # 부가 기능 — 탐지 시 한국어 메타 생성(on/off), RAG 참고 CVE(Qdrant Cloud URL 등)
+      SCANOPS_META: ${SCANOPS_META:-on}
+      QDRANT_URL: ${QDRANT_URL:-}
+    networks: [scanops-net]
+    restart: unless-stopped
+
+  zap:
+    profiles: ["zap-local"]   # 기본 미기동 — ZAP은 별도 인스턴스 운영(동시 스캔 격리)
+    image: ghcr.io/zaproxy/zaproxy:stable
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8090
+      -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+      -config api.key=${ZAP_API_KEY}
+    networks: [scanops-net]
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-scanops}
+      POSTGRES_USER: ${POSTGRES_USER:-scanops}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks: [scanops-net]
+    restart: unless-stopped
+
+networks:
+  scanops-net:
+    driver: bridge
+
+volumes:
+  postgres-data:

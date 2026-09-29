@@ -1,0 +1,62 @@
+{
+  "title": "설정",
+  "tabs": {
+    "account": "계정",
+    "security": "보안",
+    "notifications": "알림",
+    "billing": "결제·청구",
+    "danger": "위험 구역"
+  },
+  "account": {
+    "title": "계정 정보",
+    "name": "이름",
+    "email": "이메일",
+    "emailHint": "이메일은 변경할 수 없어요.",
+    "save": "변경 저장",
+    "saved": "저장했어요"
+  },
+  "security": {
+    "passwordTitle": "비밀번호",
+    "currentPassword": "현재 비밀번호",
+    "newPassword": "새 비밀번호",
+    "newPasswordPlaceholder": "8자 이상",
+    "changePassword": "비밀번호 변경",
+    "passwordChanged": "비밀번호를 변경했어요",
+    "githubTitle": "GitHub 연결",
+    "githubConnected": "@{{login}}",
+    "githubNotConnected": "연결되지 않음",
+    "manage": "관리"
+  },
+  "notifications": {
+    "title": "알림 설정",
+    "subtitle": "어떤 소식을 받을지 선택하세요.",
+    "scanDone": { "label": "스캔 완료 알림", "sub": "스캔이 끝나면 이메일로 알려드려요" },
+    "criticalOnly": { "label": "Critical 취약점만", "sub": "심각도 Critical일 때만 즉시 알림" },
+    "weekly": { "label": "주간 보안 브리핑", "sub": "매주 보안 현황 요약" },
+    "marketing": { "label": "마케팅 정보", "sub": "신규 기능·이벤트 소식" }
+  },
+  "billing": {
+    "planSuffix": "플랜",
+    "currentPlan": "현재 플랜",
+    "change": "플랜 변경",
+    "free": "무료",
+    "paymentMethodTitle": "결제 수단",
+    "add": "추가",
+    "addToast": "결제 수단 추가",
+    "noPaymentMethod": "등록된 결제 수단이 없어요.",
+    "receiptsTitle": "영수증",
+    "noReceipts": "아직 결제 내역이 없어요."
+  },
+  "danger": {
+    "title": "위험 구역",
+    "subtitle": "아래 작업은 되돌릴 수 없어요.",
+    "deleteAccount": "계정 삭제",
+    "deleteAccountDesc": "모든 스캔 기록과 데이터가 영구 삭제됩니다."
+  },
+  "deleteModal": {
+    "title": "정말 계정을 삭제할까요?",
+    "cancel": "취소",
+    "confirm": "삭제",
+    "body": "계정과 모든 스캔 기록이 영구적으로 삭제되며 복구할 수 없어요. 계속하시겠어요?"
+  }
+}

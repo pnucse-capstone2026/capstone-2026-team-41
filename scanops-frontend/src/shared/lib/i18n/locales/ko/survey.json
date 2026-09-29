@@ -1,0 +1,119 @@
+{
+  "back": "이전",
+  "next": "다음",
+  "submit": "제출하기",
+  "intro": {
+    "titleLine1": "1분이면 끝나요.",
+    "titleLine2": "베타 사용 경험을 들려주세요!",
+    "subtitleLine1": "ScanOps를 더 잘 만들기 위한 짧은 설문이에요.",
+    "subtitleLine2": "정답은 없어요.",
+    "rewardTitle": "설문 끝까지 완료하면",
+    "rewardPre": "정식 출시 때 ",
+    "rewardBold": "SAST 토큰 3만 줄",
+    "rewardSuffix": "을 지급해드려요.",
+    "meta": "⏱ 약 1분 · 11문항",
+    "start": "설문 시작하기"
+  },
+  "done": {
+    "titleLine1": "설문이 끝났어요!",
+    "titleLine2": "고맙습니다 🙏",
+    "descLine1": "들려주신 이야기로 ScanOps를",
+    "descLine2": "더 쓸모 있게 만들게요.",
+    "descLine3": "정식 출시 때 SAST 토큰 3만 줄을 챙겨드릴게요.",
+    "exit": "마이페이지로 돌아가기"
+  },
+  "questions": {
+    "priorToolUsed": {
+      "eyebrow": "경험",
+      "title": "ScanOps 이외의 보안 점검 서비스를\n이용해보신 적이 있으신가요?",
+      "options": { "없다": "없다", "있다": "있다" },
+      "followUpPlaceholder": "어떤 서비스를 쓰셨었나요?"
+    },
+    "comparisonVsPrior": {
+      "eyebrow": "비교",
+      "title": "이전에 쓰던 서비스와 비교했을 때\nScanOps가 더 낫거나 아쉬웠던 점은?",
+      "placeholder": "자유롭게 적어주세요"
+    },
+    "purpose": {
+      "eyebrow": "목적",
+      "title": "보안 점검 서비스를 사용한다면\n무슨 목적으로 쓰시나요 / 쓰실 예정인가요?",
+      "options": {
+        "배포전점검": "서비스 배포 전 점검용",
+        "실서비스보안점검": "실서비스 보안 점검용 사용",
+        "개인깃허브점검": "개인 GitHub 보안 점검용"
+      }
+    },
+    "role": {
+      "eyebrow": "역할",
+      "title": "팀이라면 팀 내에서\n어떤 역할이신가요?",
+      "options": {
+        "개발자": "개발자",
+        "CTO": "CTO",
+        "기획자": "기획자",
+        "보안담당자": "보안담당자",
+        "디자이너": "디자이너",
+        "기타": "기타"
+      },
+      "followUpPlaceholder": "역할을 적어주세요"
+    },
+    "reportClarity": {
+      "eyebrow": "리포트",
+      "title": "스캔 리포트(결과 화면)를\n이해하기 쉬웠나요?",
+      "options": {
+        "매우쉬움": "매우 쉬움",
+        "쉬움": "쉬움",
+        "보통": "보통",
+        "어려움": "어려움",
+        "매우어려움": "매우 어려움"
+      }
+    },
+    "falsePositive": {
+      "eyebrow": "오탐",
+      "title": "발견된 취약점 중, 실제로는 문제가 아니라고\n판단한(오탐이라고 느낀) 경우가 있었나요?",
+      "options": { "없다": "없다", "있다": "있다" },
+      "followUpPlaceholder": "어떤 부분이 오탐이라고 느끼셨나요?"
+    },
+    "continueIntent": {
+      "eyebrow": "지속 의향",
+      "title": "베타 테스트가 끝나도\nScanOps를 계속 사용하실 의향이 있으신가요?",
+      "options": { "예": "예", "아니오": "아니오" },
+      "followUpPlaceholder": "이유를 알려주세요"
+    },
+    "recommendIntent": {
+      "eyebrow": "추천 의향",
+      "title": "동료 개발자에게\nScanOps를 추천할 의향이 있나요?",
+      "options": {
+        "전혀아니다": "전혀 아니다",
+        "고민된다": "고민된다",
+        "추천하겠다": "추천하겠다"
+      }
+    },
+    "likedPoints": {
+      "eyebrow": "의견",
+      "title": "ScanOps의 어떤 점이\n마음에 드셨나요?",
+      "placeholder": "자유롭게 적어주세요"
+    },
+    "wishFeature": {
+      "eyebrow": "제안",
+      "title": "ScanOps를 구독한다면, 추가되었으면 하는 기능이나\n개선되었으면 하는 점이 있나요?",
+      "placeholder": "자유롭게 적어주세요"
+    },
+    "missedVuln": {
+      "eyebrow": "탐지",
+      "title": "이미 알고 있던 취약점 중\nScanOps에서 탐지하지 못한 경우가 있었나요?",
+      "options": { "없다": "없다", "있다": "있다" },
+      "followUpPlaceholder": "어떤 취약점이었나요?"
+    },
+    "scanSpeed": {
+      "eyebrow": "속도",
+      "title": "스캔 속도에 대해\n만족하시나요?",
+      "options": {
+        "매우느림": "매우 느림",
+        "느린편": "느린 편",
+        "적당함": "적당함",
+        "빠른편": "빠른 편",
+        "매우빠름": "매우 빠름"
+      }
+    }
+  }
+}

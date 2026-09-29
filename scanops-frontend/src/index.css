@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+/* ── ScanOps light theme (Toss-inspired, V3) ─────────────────────────────
+   Three-tier: primitive → semantic. Used via Tailwind utilities
+   (bg-brand, text-ink, border-line …). Spacing/radii follow DESIGN.md. */
+@theme {
+  /* Brand / interactive */
+  --color-brand: #3182f6;
+  --color-brand-hover: #2563eb;
+  --color-brand-soft: #eaf2fe;
+  --color-brand-press: #1b64da;
+
+  /* Ink (text) scale — warm near-black with blue undertone */
+  --color-ink: #191f28;
+  --color-ink-sub: #4e5968;
+  --color-ink-muted: #8b95a1;
+  --color-ink-faint: #b0b8c1;
+
+  /* Lines & surfaces */
+  --color-line: #e5e8eb;
+  --color-line-strong: #d1d6db;
+  --color-surface: #f9fafb;
+  --color-field: #f2f4f6;
+
+  /* Semantic status */
+  --color-success: #03b26c;
+  --color-success-soft: #e7f8f0;
+  --color-danger: #f04452;
+  --color-danger-soft: #fdeced;
+  --color-warning: #fe9800;
+  --color-warning-soft: #fff3e2;
+  --color-info: #18a5a5;
+  --color-purple: #8b5cf6;
+  --color-purple-soft: #f3eefe;
+
+  /* Scan modes */
+  --color-scan-web: #3182f6;
+  --color-scan-code: #8b5cf6;
+  --color-scan-pr: #03b26c;
+
+  /* Severity (vulnerabilities) */
+  --color-sev-critical: #e02d3c;
+  --color-sev-high: #f04452;
+  --color-sev-medium: #fe9800;
+  --color-sev-low: #3182f6;
+  --color-sev-info: #8b95a1;
+
+  /* Elevation */
+  --shadow-subtle: 0px 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0px 2px 8px rgba(0, 0, 0, 0.07);
+  --shadow-elevated: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0px 12px 32px rgba(0, 0, 0, 0.16);
+}
+
+html {
+  background: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family:
+    'Pretendard', 'Apple SD Gothic Neo', system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tabular numerals for metric figures (Toss principle) */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Toss-like progress shimmer used on the scan status screen */
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f2f4f6 25%, #e9edf1 37%, #f2f4f6 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.4s cubic-bezier(0, 0, 0.2, 1) both; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.7s linear infinite; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toast-in { animation: toastIn 0.25s cubic-bezier(0, 0, 0.2, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

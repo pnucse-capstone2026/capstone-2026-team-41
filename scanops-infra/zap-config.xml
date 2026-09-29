@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+    <api>
+        <disablekey>true</disablekey>
+        <incerrordetails>true</incerrordetails>
+        <autofillkey>false</autofillkey>
+        <addrs>
+            <addr>
+                <name>.*</name>
+                <regex>true</regex>
+                <enabled>true</enabled>
+            </addr>
+        </addrs>
+    </api>
+</config>

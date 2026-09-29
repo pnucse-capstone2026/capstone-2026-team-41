@@ -1,0 +1,52 @@
+{
+  "header": {
+    "login": "로그인",
+    "signup": "무료로 시작"
+  },
+  "hero": {
+    "badge": "요금제",
+    "title": "필요한 만큼만, 합리적으로",
+    "desc": "회원가입하면 DAST 1회를 무료로 체험할 수 있어요. Pro는 7일 무료체험을 제공하며, 모든 플랜은 언제든 해지할 수 있습니다."
+  },
+  "personal": {
+    "title": "개인 플랜",
+    "sub": "혼자 또는 소규모로 시작할 때"
+  },
+  "team": {
+    "title": "팀 플랜",
+    "sub": "멤버가 늘어도 한도가 함께 커져요",
+    "addonTitle": "멤버 추가 시",
+    "addonDesc": "기본 3명을 초과해 1명을 추가할 때마다 요금과 한도가 함께 늘어납니다.",
+    "memberCount": "멤버 수",
+    "memberCountValue": "기본 3명",
+    "addon": {
+      "member": "멤버 추가",
+      "memberValue": "1명당 +₩20,000",
+      "dast": "DAST 웹 스캔",
+      "dastValue": "+월 7회",
+      "sastActions": "SAST · GitHub App 액션",
+      "sastActionsValue": "+월 23만 줄"
+    }
+  },
+  "overage": {
+    "title": "한도 초과 시 종량 추가결제",
+    "sub": "필요한 만큼만 그때그때 추가로 결제해요",
+    "sastActions": "SAST · GitHub App 액션",
+    "sastActionsValue": "1만 줄당 ₩5,000",
+    "dast": "DAST 웹 스캔",
+    "dastValue": "3회당 ₩5,000"
+  },
+  "footnote": "LOC(줄 수) 한도는 베타 기간 측정값 기준의 잠정값이며, SAST·GitHub App 처리 비용을 통제하기 위한 안전장치입니다.",
+  "card": {
+    "notSupported": "미지원",
+    "dast": "DAST 웹 스캔",
+    "sastActions": "SAST · GitHub App 액션",
+    "highlight": "핵심 혜택",
+    "popular": "인기",
+    "current": "현재 플랜",
+    "betaLocked": "베타 기간 중 준비 중",
+    "using": "사용 중",
+    "startFree": "무료로 시작",
+    "startPlan": "{{name}} 시작하기"
+  }
+}

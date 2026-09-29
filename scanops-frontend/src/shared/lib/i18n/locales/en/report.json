@@ -1,0 +1,49 @@
+{
+  "back": "Scan History",
+  "detail": {
+    "analysisLabel": "Analysis",
+    "seconds": "{{value}}s",
+    "lines": "{{value}} lines",
+    "engineLabel": "Engine",
+    "engineWebsite": "OWASP ZAP + AI Analysis",
+    "rescan": "Rescan",
+    "stats": {
+      "vulnerabilities": "Vulnerabilities",
+      "maxCvss": "Max CVSS"
+    },
+    "empty": {
+      "title": "No vulnerabilities found",
+      "desc": "You're safe as of now. Re-scan if your code changes."
+    },
+    "foundCount": "{{count}} vulnerabilities found",
+    "toast": {
+      "pdfReady": "Your PDF report is ready",
+      "copied": "Copied"
+    }
+  },
+  "vuln": {
+    "plainLabel": "In plain terms",
+    "evidence": "Evidence",
+    "attackScenario": "Attack Scenario",
+    "fixMethod": "How to Fix",
+    "locationLabel": "Location:",
+    "copyFixPrompt": "Copy AI Fix Prompt",
+    "copyAriaLabel": "Copy",
+    "detectionBasis": "Detection Basis",
+    "confidence": "Confidence {{value}}%",
+    "verdict": {
+      "confirmed": "Graph Confirmed",
+      "suppressed": "Graph Verified",
+      "llmOnly": "AI Detected"
+    },
+    "fixPrompt": {
+      "intro": "Explain how to fix the following security vulnerability, with an example tailored to my code.",
+      "vulnLabel": "[Vulnerability]",
+      "severityLabel": "[Severity]",
+      "locationLabel": "[Location]",
+      "problemLabel": "[Problem]",
+      "fixLabel": "[Recommended Fix]",
+      "outro": "Write out the specific fix code and configuration (headers/options, etc.) step by step."
+    }
+  }
+}

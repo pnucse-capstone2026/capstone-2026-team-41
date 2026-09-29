@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "verify": "Benchmark",
+    "whyDifferent": "Why Us",
+    "codeSecurity": "Code Security",
+    "pricing": "Pricing",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
+  },
+  "hero": {
+    "badge": "Java is analyzed with both CPG and Qwen3.8-Max",
+    "titleLine1": "Is your code,",
+    "titleHighlight": "actually safe?",
+    "subtitle1": "Java combines Joern code property graphs with Qwen3.8-Max semantic review, while other languages keep their existing analysis engine.",
+    "subtitle2": "Just drop in a URL or GitHub repo, and we'll walk you through the risk level and how to fix it — all in one clear report.",
+    "ctaStart": "Start a free scan",
+    "ctaBenchmark": "See the benchmark results",
+    "note": "Sign up for 1 free website security scan · No card required"
+  },
+  "stats": {
+    "noExternalCode": { "value": "Java", "label": "Joern CPG + Qwen3.8-Max ensemble" },
+    "falsePositiveRate": { "value": "2/2", "label": "Vulnerable and safe Java server checks completed" },
+    "hybrid": { "value": "37 sec", "label": "Two-file live site integration check" },
+    "threeModes": { "value": "3", "label": "DAST · SAST · PR auto-analysis, all in one" }
+  },
+  "benchmark": {
+    "tag": "Benchmark",
+    "title": "We verified the Java analysis path on the live site",
+    "sub": "We connected the frontend, backend, Java analysis server, Joern, and Qwen and checked both vulnerable and safe examples.",
+    "card1": {
+      "title": "Vulnerable and safe examples checked together",
+      "desc": "The vulnerable Java example produced CWE-79 at the original line, while the safe example produced no finding.",
+      "scanopsLabel": "Vulnerable Java finding",
+      "commercialLabel": "Safe Java warning",
+      "vulnerableValue": "1",
+      "safeValue": "0",
+      "footnote": "* This is a two-file functional demonstration, not evidence of detection superiority."
+    },
+    "card2": {
+      "title": "Java-specific ensemble analysis",
+      "desc": "We preserve results and evidence from different analysis methods and merge them into one report.",
+      "steps": {
+        "staticAnalysis": "Static data-flow analysis",
+        "semanticReview": "Code semantic review",
+        "resultMerge": "Finding and evidence merge"
+      },
+      "badges": {
+        "staticAnalysis": "Joern CPG",
+        "semanticReview": "Qwen3.8-Max",
+        "resultMerge": "ScanOps"
+      },
+      "footer": "Java semantic review sends the required code context to the DashScope Qwen API."
+    }
+  },
+  "why": {
+    "tag": "Why Us",
+    "title": "Separate analysis paths for each language and purpose",
+    "sub": "Java combines graph evidence with semantic review, while other languages keep their existing analysis path.",
+    "cards": {
+      "localModel": {
+        "title": "Java CPG + Qwen ensemble",
+        "desc": "Joern finds static data flows and Qwen3.8-Max separately reviews code semantics. Reports retain the source and evidence for each finding."
+      },
+      "wholeRepo": {
+        "title": "Repository-level Java CPG analysis",
+        "desc": "Submitted Java files are passed to Joern as one job to inspect code structure and data flow. Results preserve the original file and line."
+      },
+      "confidentFilter": {
+        "title": "Incomplete analysis is reported as failure",
+        "desc": "Connection failures, missing files, timeouts, and PARTIAL results are not converted into a safe verdict. A failure state tells users when to retry."
+      }
+    }
+  },
+  "security": {
+    "tag": "Code Security",
+    "title": "A transparent path for handling code",
+    "sub": "URL scans require no source code, while repository and PR scans process code through the ScanOps analysis path.",
+    "flow1": {
+      "badge": "Free · Pro",
+      "title": "URL scan — no code transfer",
+      "steps": ["Enter a web URL", "ScanOps runs a dynamic scan from the outside", "Only a vulnerability report is generated"],
+      "note": "Your source code itself is never sent to our servers."
+    },
+    "flow2": {
+      "badge": "GitHub Repository · App",
+      "title": "Repo and PR scan — ScanOps analysis path",
+      "steps": ["Read the selected code from GitHub", "Route it to the language-specific engine", "Store findings and evidence in the report"],
+      "note": "Java semantic review sends the required code context to the external DashScope Qwen API."
+    },
+    "features": {
+      "memoryOnly": { "title": "Result-focused storage", "desc": "The DB stores vulnerability results and report metadata" },
+      "immediateDeletion": { "title": "Temporary workspace cleanup", "desc": "Joern removes temporary analysis files after each job" },
+      "readOnly": { "title": "Read-only access", "desc": "Requests only the minimum required GitHub scope" },
+      "httpsEncryption": { "title": "Protected communication paths", "desc": "Public traffic uses HTTPS; the analysis server is private-VPC only" }
+    }
+  },
+  "scanModes": {
+    "tag": "3 Scan Modes",
+    "title": "From web to repo to PR, all in one",
+    "sub": "Choose the mode that fits what you're scanning. Usage is tracked transparently for each mode.",
+    "dast": { "title": "Website dynamic analysis", "desc": "Scans your running app from the outside. Diagnoses with just a URL — no code transfer required." },
+    "sast": { "title": "Full-repo static analysis", "desc": "Java combines Joern CPG with Qwen3.8-Max, while other languages use the existing analysis engine." },
+    "actions": { "title": "Automatic PR analysis", "desc": "The GitHub App sends changed PR code through the ScanOps analysis path and reports findings on the relevant lines." }
+  },
+  "pricing": {
+    "tag": "Pricing",
+    "title": "Pay for only what you need",
+    "sub": "Sign up and try one DAST scan for free. Pro comes with a 7-day free trial, and you can cancel anytime.",
+    "popular": "Popular",
+    "perMonth": "/mo",
+    "free": { "desc": "Sign up and try it out", "feats": ["1 DAST web scan", "Results kept for 1 month"] },
+    "pro": { "desc": "Recommended for solo developers and vibe coders", "feats": ["DAST: 5 scans/month", "SAST + Actions: 100K lines/month", "Automatic PR analysis", "AI briefing & PDF reports"] },
+    "max": { "desc": "Recommended for individuals with large codebases", "feats": ["DAST: 30 scans/month", "SAST + Actions: 400K lines/month", "Priority analysis queue"] },
+    "ctaFree": "Start for free",
+    "ctaStart": "Start {{name}}",
+    "compareLink": "See team plans & full comparison"
+  },
+  "githubCta": {
+    "badge": "GitHub App",
+    "titleBefore": "Open a PR, get ",
+    "titleHighlight": "automatic analysis",
+    "titleAfter": ".",
+    "desc": "Install the ScanOps GitHub App on your repo, and every PR's changed code gets checked automatically. Any vulnerabilities found are posted as comments right on the relevant line, explaining what's wrong and how to fix it.",
+    "cta": "Get the GitHub App"
+  },
+  "finalCta": {
+    "title": "Check your code for free, right now",
+    "subtitle": "Sign up and try one free website security scan. No card required.",
+    "ctaStart": "Get started for free",
+    "ctaLogin": "Log in"
+  },
+  "footer": {
+    "copyright": "© 2026 ScanOps · Security analysis combining CPG and AI"
+  },
+  "reportPreview": {
+    "scanCompleted": "Scan completed {{date}}",
+    "summary": {
+      "vulnerabilities": "Vulnerabilities",
+      "vulnerabilitiesValue": "7",
+      "maxCvss": "Highest CVSS",
+      "criticalValue": "1",
+      "highValue": "1"
+    },
+    "privacyNote": "Results are stored and temporary analysis workspaces are cleaned up"
+  }
+}

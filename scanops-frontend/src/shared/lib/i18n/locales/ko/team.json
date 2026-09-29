@@ -1,0 +1,28 @@
+{
+  "title": "팀",
+  "subtitle": "멤버를 초대하고 권한을 관리하세요.",
+  "invite": "멤버 초대",
+  "seatsUsed": "사용 중인 좌석",
+  "seatsInfo": "기본 3명 포함 · 멤버 추가 시 1명당 ₩25,000",
+  "invitedBadge": "초대됨",
+  "remove": "제거",
+  "removed": "멤버를 제거했어요",
+  "invalidEmail": "올바른 이메일을 입력해 주세요",
+  "invited": "초대를 보냈어요",
+  "inviteModal": {
+    "title": "멤버 초대",
+    "cancel": "취소",
+    "send": "초대 보내기",
+    "desc": "초대할 멤버의 이메일을 입력하세요. 기본 3명을 초과하면 추가 요금이 발생해요.",
+    "emailLabel": "이메일"
+  },
+  "role": {
+    "OWNER": "소유자",
+    "ADMIN": "관리자",
+    "MEMBER": "멤버"
+  },
+  "status": {
+    "ACTIVE": "활성",
+    "INVITED": "초대됨"
+  }
+}

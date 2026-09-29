@@ -1,0 +1,40 @@
+{
+  "steps": {
+    "connectGithub": "GitHub 연결",
+    "chooseStart": "시작 방법 선택"
+  },
+  "loginRequired": "먼저 로그인해 주세요",
+  "step0": {
+    "greeting": "환영해요, {{name}}님 👋",
+    "desc": "GitHub를 연결하면 레포 전체(SAST)·PR 자동 분석을 바로 사용할 수 있어요.",
+    "connectedTitle": "@{{login}} 연결됨",
+    "connectTitle": "GitHub 계정 연결",
+    "connectedSub": "레포·PR 분석을 사용할 수 있어요.",
+    "connectSub": "읽기 권한만 요청합니다.",
+    "connectButton": "연결",
+    "later": "나중에 하기",
+    "next": "다음"
+  },
+  "step1": {
+    "title": "무엇부터 해볼까요?",
+    "desc": "원하는 방식으로 첫 보안 점검을 시작해요.",
+    "options": {
+      "website": {
+        "tag": "DAST · 무료 1회",
+        "title": "웹사이트 검사",
+        "sub": "실행 중인 사이트를 동적 분석"
+      },
+      "repo": {
+        "tag": "SAST",
+        "title": "GitHub 레포 분석",
+        "sub": "소스코드 전체 정적 분석"
+      },
+      "dashboard": {
+        "tag": "둘러보기",
+        "title": "대시보드로 이동",
+        "sub": "샘플 리포트와 사용량을 먼저 확인"
+      }
+    },
+    "back": "이전"
+  }
+}

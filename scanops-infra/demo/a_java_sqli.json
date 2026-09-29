@@ -1,0 +1,1 @@
+{"language":"Java","file_path":"UserDao.java","code":"public class UserDao {\n    private java.sql.Connection conn;\n    public java.sql.ResultSet findByName(String name) throws Exception {\n        java.sql.Statement st = conn.createStatement();\n        String sql = \"SELECT * FROM users WHERE name = '\" + name + \"'\";\n        return st.executeQuery(sql);\n    }\n}\n"}

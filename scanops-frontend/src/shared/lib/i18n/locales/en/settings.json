@@ -1,0 +1,62 @@
+{
+  "title": "Settings",
+  "tabs": {
+    "account": "Account",
+    "security": "Security",
+    "notifications": "Notifications",
+    "billing": "Billing",
+    "danger": "Danger zone"
+  },
+  "account": {
+    "title": "Account info",
+    "name": "Name",
+    "email": "Email",
+    "emailHint": "Your email can't be changed.",
+    "save": "Save changes",
+    "saved": "Saved"
+  },
+  "security": {
+    "passwordTitle": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "newPasswordPlaceholder": "8+ characters",
+    "changePassword": "Change password",
+    "passwordChanged": "Password changed",
+    "githubTitle": "GitHub connection",
+    "githubConnected": "@{{login}}",
+    "githubNotConnected": "Not connected",
+    "manage": "Manage"
+  },
+  "notifications": {
+    "title": "Notification settings",
+    "subtitle": "Choose which updates you'd like to receive.",
+    "scanDone": { "label": "Scan complete alerts", "sub": "Get an email when a scan finishes" },
+    "criticalOnly": { "label": "Critical vulnerabilities only", "sub": "Instant alerts only for Critical severity" },
+    "weekly": { "label": "Weekly security briefing", "sub": "A weekly summary of your security status" },
+    "marketing": { "label": "Marketing updates", "sub": "News on new features and events" }
+  },
+  "billing": {
+    "planSuffix": "Plan",
+    "currentPlan": "Current plan",
+    "change": "Change plan",
+    "free": "Free",
+    "paymentMethodTitle": "Payment method",
+    "add": "Add",
+    "addToast": "Add payment method",
+    "noPaymentMethod": "No payment method on file.",
+    "receiptsTitle": "Receipts",
+    "noReceipts": "No billing history yet."
+  },
+  "danger": {
+    "title": "Danger zone",
+    "subtitle": "These actions cannot be undone.",
+    "deleteAccount": "Delete account",
+    "deleteAccountDesc": "All scan history and data will be permanently deleted."
+  },
+  "deleteModal": {
+    "title": "Delete your account?",
+    "cancel": "Cancel",
+    "confirm": "Delete",
+    "body": "Your account and all scan history will be permanently deleted and cannot be recovered. Do you want to continue?"
+  }
+}

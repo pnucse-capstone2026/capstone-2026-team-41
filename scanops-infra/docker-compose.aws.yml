@@ -1,0 +1,111 @@
+# ScanOps — AWS 프로덕션 docker-compose (EC2 한 대 올인원)
+# ============================================================
+# 사용법 (EC2 Ubuntu에서):
+#   1) 세 레포를 같은 부모 디렉터리에 clone:
+#        scanops/scanops-infra, scanops/scanops-backend, scanops/scanops-model
+#   2) scanops-infra/.env.aws 작성 (.env.aws.example 참고)
+#   3) docker compose -f docker-compose.aws.yml --env-file .env.aws up -d --build
+#   4) (최초 1회) Ollama에 모델 등록:  AWS_MIGRATION.md §6 참고
+#
+# 외부 노출은 backend(8080)만. 나머지는 scanops-net 내부 통신.
+# 보안그룹: 80/443만 외부 허용, 8090/8100/11434/6333/5432는 내부만.
+
+services:
+  # ── 백엔드 (Spring Boot, Java 17) — 유일한 외부 노출 ──────────────────
+  backend:
+    build:
+      context: ../scanops-backend
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8080
+      # DB — MVP는 아래 postgres 컨테이너, 운영은 RDS 엔드포인트로 교체
+      JDBC_DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-scanops}
+      PGUSER: ${POSTGRES_USER:-scanops}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      # 내부 서비스 (서비스명으로 통신)
+      SCANOPS_MODEL_URL: http://model-server:8100
+      SCANOPS_API_KEY: ${SCANOPS_API_KEY}
+      ZAP_HOST: http://zap:8090
+      ZAP_API_KEY: ${ZAP_API_KEY}
+      # AI 라우터 폴백 (선택)
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      CLAUDE_API_KEY: ${CLAUDE_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      # GitHub App (PR 스캔)
+      GITHUB_APP_ID: ${GITHUB_APP_ID:-}
+      GITHUB_APP_PRIVATE_KEY: ${GITHUB_APP_PRIVATE_KEY:-}
+      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET:-}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+    ports:
+      - "8080:8080"           # ALB/nginx가 80/443 → 여기로 프록시
+    depends_on: [postgres, model-server, zap]
+    networks: [scanops-net]
+    restart: unless-stopped
+
+  # ── 모델 서버 (FastAPI) — AI 분석·RAG·그래프 ────────────────────────
+  model-server:
+    build:
+      context: ../scanops-model
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8100
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_COLLECTION: cve_vulnerabilities
+      OLLAMA_URL: http://ollama:11434/api/generate
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5-coder-security-v11}
+      SCANOPS_API_KEY: ${SCANOPS_API_KEY}
+      XAI_API_KEY: ${XAI_API_KEY:-}
+      # Neo4j는 현재 미사용(인메모리 폴백). Aura 붙이면 NEO4J_URI 등 추가.
+    depends_on: [qdrant, ollama]
+    networks: [scanops-net]
+    restart: unless-stopped
+
+  # ── Ollama — LLM(GGUF) 구동 ─────────────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+      - ./models:/models:ro   # GGUF + Modelfile 두는 곳 (최초 등록용)
+    networks: [scanops-net]
+    restart: unless-stopped
+    # GPU 불필요(양자화 모델 CPU 구동). 메모리: 3B Q4 ≈ 3GB
+
+  # ── Qdrant — 벡터 DB (CVE) ──────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks: [scanops-net]
+    restart: unless-stopped
+
+  # ── ZAP — DAST 스캐너 (절대 외부 노출 금지) ─────────────────────────
+  zap:
+    image: ghcr.io/zaproxy/zaproxy:stable
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8090
+      -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+      -config api.key=${ZAP_API_KEY}
+    networks: [scanops-net]
+    restart: unless-stopped
+    # ⚠️ ports 매핑 없음 = 외부 비노출. 메모리: 스캔 시 1~2GB
+
+  # ── PostgreSQL — 백엔드 DB (운영은 RDS 권장) ────────────────────────
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-scanops}
+      POSTGRES_USER: ${POSTGRES_USER:-scanops}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks: [scanops-net]
+    restart: unless-stopped
+
+networks:
+  scanops-net:
+    driver: bridge
+
+volumes:
+  ollama-data:
+  qdrant-data:
+  postgres-data:

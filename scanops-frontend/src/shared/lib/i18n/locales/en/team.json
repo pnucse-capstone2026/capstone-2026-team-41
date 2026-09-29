@@ -1,0 +1,28 @@
+{
+  "title": "Team",
+  "subtitle": "Invite members and manage permissions.",
+  "invite": "Invite member",
+  "seatsUsed": "Seats used",
+  "seatsInfo": "Includes 3 seats by default · additional members are ₩25,000/seat",
+  "invitedBadge": "Invited",
+  "remove": "Remove",
+  "removed": "Member removed",
+  "invalidEmail": "Please enter a valid email address",
+  "invited": "Invitation sent",
+  "inviteModal": {
+    "title": "Invite member",
+    "cancel": "Cancel",
+    "send": "Send invite",
+    "desc": "Enter the email of the member you'd like to invite. Additional charges apply beyond the default 3 seats.",
+    "emailLabel": "Email"
+  },
+  "role": {
+    "OWNER": "Owner",
+    "ADMIN": "Admin",
+    "MEMBER": "Member"
+  },
+  "status": {
+    "ACTIVE": "Active",
+    "INVITED": "Invited"
+  }
+}

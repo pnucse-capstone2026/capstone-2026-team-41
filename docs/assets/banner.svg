@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+<title id="title">ScanOps</title><desc id="desc">Code to insight. CPG, LLM and CVSS based vulnerability analysis. PNU Capstone 2026 Team 41.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#101b35"/><stop offset="1" stop-color="#123d68"/></linearGradient></defs>
+<rect width="1280" height="360" rx="24" fill="url(#bg)"/>
+<g fill="none" stroke="#60a5fa" opacity=".16"><path d="M825 0v360M925 0v360M1025 0v360M1125 0v360M1225 0v360M780 80h500M780 180h500M780 280h500"/></g>
+<path d="M990 80l95 38v73c0 54-43 91-95 110-52-19-95-56-95-110v-73z" fill="#1c5285" stroke="#60a5fa" stroke-width="3"/>
+<path d="M966 156l-30 27 30 27m48-54 30 27-30 27m-13-67-22 82" fill="none" stroke="#a5f3fc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+<g font-family="Arial, sans-serif"><text x="70" y="67" fill="#93c5fd" font-size="16" letter-spacing="3">PNU CAPSTONE 2026 · TEAM 41</text><text x="66" y="163" fill="white" font-size="76" font-weight="700">ScanOps</text><text x="70" y="211" fill="#dbeafe" font-size="26">From code to actionable security insights.</text>
+<g font-size="16" fill="#dbeafe"><rect x="70" y="256" width="106" height="38" rx="19" fill="#24476e"/><text x="97" y="281">CPG</text><rect x="188" y="256" width="106" height="38" rx="19" fill="#24476e"/><text x="216" y="281">LLM</text><rect x="306" y="256" width="116" height="38" rx="19" fill="#24476e"/><text x="334" y="281">CVSS</text></g></g></svg>

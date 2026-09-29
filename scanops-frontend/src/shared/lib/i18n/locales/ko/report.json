@@ -1,0 +1,49 @@
+{
+  "back": "스캔 기록",
+  "detail": {
+    "analysisLabel": "분석",
+    "seconds": "{{value}}초",
+    "lines": "{{value}}줄",
+    "engineLabel": "엔진",
+    "engineWebsite": "OWASP ZAP + AI 분석",
+    "rescan": "재스캔",
+    "stats": {
+      "vulnerabilities": "취약점",
+      "maxCvss": "최고 CVSS"
+    },
+    "empty": {
+      "title": "발견된 취약점이 없어요",
+      "desc": "현재 기준으로 안전합니다. 코드가 바뀌면 다시 검사해 주세요."
+    },
+    "foundCount": "발견된 취약점 {{count}}건",
+    "toast": {
+      "pdfReady": "PDF 리포트를 준비했어요",
+      "copied": "복사되었어요"
+    }
+  },
+  "vuln": {
+    "plainLabel": "쉽게 말하면",
+    "evidence": "증거",
+    "attackScenario": "공격 시나리오",
+    "fixMethod": "해결 방법",
+    "locationLabel": "위치:",
+    "copyFixPrompt": "AI 수정 프롬프트 복사",
+    "copyAriaLabel": "복사",
+    "detectionBasis": "탐지 근거",
+    "confidence": "신뢰도 {{value}}%",
+    "verdict": {
+      "confirmed": "그래프 확정",
+      "suppressed": "그래프 검증",
+      "llmOnly": "AI 탐지"
+    },
+    "fixPrompt": {
+      "intro": "다음 보안 취약점을 수정하는 방법을 내 코드에 맞는 예시와 함께 알려줘.",
+      "vulnLabel": "[취약점]",
+      "severityLabel": "[심각도]",
+      "locationLabel": "[위치]",
+      "problemLabel": "[문제]",
+      "fixLabel": "[권장 조치]",
+      "outro": "구체적인 수정 코드와 설정(헤더/옵션 등)을 단계별로 작성해줘."
+    }
+  }
+}

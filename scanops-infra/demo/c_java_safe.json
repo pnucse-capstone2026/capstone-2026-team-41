@@ -1,0 +1,1 @@
+{"language":"Java","file_path":"UserDaoSafe.java","code":"public class UserDaoSafe {\n    private java.sql.Connection conn;\n    public java.sql.ResultSet findByName(String name) throws Exception {\n        java.sql.PreparedStatement ps = conn.prepareStatement(\"SELECT * FROM users WHERE name = ?\");\n        ps.setString(1, name);\n        return ps.executeQuery();\n    }\n}\n"}

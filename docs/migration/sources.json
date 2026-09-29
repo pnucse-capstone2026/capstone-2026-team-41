@@ -1,0 +1,88 @@
+{
+  "snapshot_date": "2026-09-29",
+  "repositories": [
+    {
+      "repository": "26Graduation/scanops-frontend",
+      "source_url": "https://github.com/26Graduation/scanops-frontend",
+      "default_branch": "main",
+      "commit": "8a32d9f16d643e7400a036b46f153482a263725c",
+      "tree": "50e66685f867724a00329a1162a8774b42ab2c05",
+      "files": 121,
+      "refs": {
+        "refs/remotes/frontend/HEAD": "8a32d9f16d643e7400a036b46f153482a263725c",
+        "refs/remotes/frontend/codex/main-review-20260914": "de2cfe86db956491913378826b71adde3514a454",
+        "refs/remotes/frontend/develop": "4c91772368ccc1f9d62b6989106051ad8576622c",
+        "refs/remotes/frontend/fix/scan-schema-sync": "46860e078cab161f43793094f2384c17ca9dce32",
+        "refs/remotes/frontend/main": "8a32d9f16d643e7400a036b46f153482a263725c"
+      },
+      "bundle": "scanops-frontend.bundle",
+      "bundle_sha256": "bc7fc0649c63b2ce96e112baa160be325afe38c4d2f73c9469586bbec614b34a"
+    },
+    {
+      "repository": "26Graduation/scanops-backend",
+      "source_url": "https://github.com/26Graduation/scanops-backend",
+      "default_branch": "main",
+      "commit": "71155511d8e4421413a148e9f632a2e551259e11",
+      "tree": "d20ed6d8f7ca19e6e0c8a57352e5c9a0e78f2699",
+      "files": 125,
+      "refs": {
+        "refs/remotes/backend/HEAD": "71155511d8e4421413a148e9f632a2e551259e11",
+        "refs/remotes/backend/codex/main-review-20260914": "2d47d2971bac459cc42569034cd4811bbd22d744",
+        "refs/remotes/backend/develop": "e9913293a91d21b1b29a2ba3f9fc0239a439bec4",
+        "refs/remotes/backend/feat/aws-db": "d3022c72a9c05b382f3206de6d7343cebd5aa756",
+        "refs/remotes/backend/feat/db-redesign": "e529ad0d9d1dcb2ede6ba7d9db8716ee962069db",
+        "refs/remotes/backend/fix/onprem-build": "d875279466b05c2df2402f1de3ce670c38293735",
+        "refs/remotes/backend/main": "71155511d8e4421413a148e9f632a2e551259e11"
+      },
+      "bundle": "scanops-backend.bundle",
+      "bundle_sha256": "e6664769f970aad01f10e12e2b4aa1f1e2bb414f0847e4d2b480069f17d0e4ab"
+    },
+    {
+      "repository": "26Graduation/scanops-model",
+      "source_url": "https://github.com/26Graduation/scanops-model",
+      "default_branch": "main",
+      "commit": "a31fc5ea34fe618d8aca53d3847b3328e1c8b386",
+      "tree": "cffdbda3f6b86eb80b1a37cdf88eead7717a6d2d",
+      "files": 1116,
+      "refs": {
+        "refs/remotes/model/HEAD": "a31fc5ea34fe618d8aca53d3847b3328e1c8b386",
+        "refs/remotes/model/codex/java-cpg-iris-v2": "61ce3a83510553cc7ab74627cf0f8409fc9e1b93",
+        "refs/remotes/model/codex/main-review-20260914": "32f1bcc0b70331e4fc5fcb247395d55fd534717f",
+        "refs/remotes/model/develop": "8a7354d0ac6be8c6b7fc71da459f24e2d9fb7c89",
+        "refs/remotes/model/feat/dual-engine-bench": "8930fedadd272cf501e88d6acaa2a6f98a4eef06",
+        "refs/remotes/model/feat/hyeeun": "91c65291de8d37f149c204aa86ce2a1c44145581",
+        "refs/remotes/model/feat/joern-hybrid": "02bf6e831dc4f6cabb35f2f976ce4faf1b91b7e9",
+        "refs/remotes/model/feat/joern-hybrid-final": "ae49f7fb4c679a888df2524ab05087788f94780c",
+        "refs/remotes/model/feat/joern-hybrid-v2": "445e0e343a414ff39542d664a8a05976b9448a45",
+        "refs/remotes/model/feat/joern-hybrid-v3": "1650e6554d43383f0077f43a8872b8d5f2febf4c",
+        "refs/remotes/model/feat/kyungyun": "cfbf6ac7db7b530e8e052fd67e12e7b911058c4e",
+        "refs/remotes/model/feat/release-fixes": "a1c42b85ae9fa3d33111db45ea2fd6757aafc973",
+        "refs/remotes/model/feat/sehan": "8dad25f2490710a9e5839bc8b62ce5c39706c50f",
+        "refs/remotes/model/feat/v5-false-positive-report": "37d13ab8bbeff5896d447c12f6ce21ed038c378c",
+        "refs/remotes/model/main": "a31fc5ea34fe618d8aca53d3847b3328e1c8b386",
+        "refs/tags/finetuned-v1-20260914": "32f1bcc0b70331e4fc5fcb247395d55fd534717f"
+      },
+      "bundle": "scanops-model.bundle",
+      "bundle_sha256": "d5c431105e0708b4817684d132de1ec34e66f804fb7dd7652a7ff1ed1cf2b7f9"
+    },
+    {
+      "repository": "26Graduation/scanops-infra",
+      "source_url": "https://github.com/26Graduation/scanops-infra",
+      "default_branch": "main",
+      "commit": "728a443fda44491a1f44c859407976e31cccbd65",
+      "tree": "b77fadb51a508b4561866e2bbb6048469d57b00b",
+      "files": 37,
+      "refs": {
+        "refs/remotes/infra/HEAD": "728a443fda44491a1f44c859407976e31cccbd65",
+        "refs/remotes/infra/codex/java-cpg-qwen38": "cd09fd8715069db13ff09d9cc21f6f629f6578f0",
+        "refs/remotes/infra/codex/main-review-20260914": "2d6688854b876398f28e18188e3107761c587ff8",
+        "refs/remotes/infra/develop": "a9a43493c93549d47b43f86e75ac85fb36d0ccbd",
+        "refs/remotes/infra/feat/joern-hybrid": "515972c57fc7280b98a7c4e4ca55f22ff69a64ba",
+        "refs/remotes/infra/feat/joern-hybrid-final": "3e0556bc84aa9c3b094a909a4b2ff904bc765dac",
+        "refs/remotes/infra/main": "728a443fda44491a1f44c859407976e31cccbd65"
+      },
+      "bundle": "scanops-infra.bundle",
+      "bundle_sha256": "18ae1d9a9c2a2b603497dc1abe2607262806115cf5640d082e6349262816cc33"
+    }
+  ]
+}

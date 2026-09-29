@@ -1,0 +1,117 @@
+{
+  "nav": {
+    "dashboard": "대시보드",
+    "scan": "스캔",
+    "scanHistory": "스캔 기록",
+    "integrations": "연동",
+    "pricing": "요금제"
+  },
+  "newScan": "새 스캔",
+  "accountMenu": "계정 메뉴",
+  "menu": {
+    "mypage": "마이페이지",
+    "settings": "설정",
+    "billing": "요금제·결제",
+    "restartTour": "가이드 다시보기",
+    "logout": "로그아웃"
+  },
+  "modes": {
+    "WEBSITE": { "label": "웹사이트" },
+    "GITHUB_REPO": { "label": "레포 전체" },
+    "GITHUB_ACTIONS": { "label": "PR 분석" }
+  },
+  "plans": {
+    "FREE": { "desc": "회원가입만 하면 바로 체험", "dast": "1회 무료", "sastActions": "미지원", "highlight": "스캔 결과 1개월 보관" },
+    "PRO": { "desc": "1인 개발자·바이브코더에게 추천", "dast": "월 5회", "sastActions": "월 10만 줄", "highlight": "AI 브리핑·PDF 리포트", "trial": "7일 무료체험" },
+    "MAX": { "desc": "코드량이 많은 개인에게 추천", "dast": "월 30회", "sastActions": "월 40만 줄", "highlight": "우선 분석 큐" },
+    "TEAM": { "desc": "3~5인 스타트업 팀 · 기본 3명 포함", "dast": "월 20회", "sastActions": "월 33만 줄", "highlight": "멤버·권한 관리" }
+  },
+  "common": {
+    "loading": "불러오는 중...",
+    "save": "저장",
+    "cancel": "취소",
+    "confirm": "확인",
+    "delete": "삭제",
+    "edit": "수정",
+    "close": "닫기",
+    "back": "뒤로",
+    "next": "다음",
+    "error": "오류가 발생했습니다"
+  },
+  "auth": {
+    "genericError": "요청에 실패했어요."
+  },
+  "input": {
+    "showPassword": "비밀번호 표시",
+    "hidePassword": "비밀번호 숨기기"
+  },
+  "modal": {
+    "close": "닫기"
+  },
+  "cvssGauge": {
+    "title": "최고 CVSS 점수"
+  },
+  "vulnChart": {
+    "title": "위험도별 취약점 수"
+  },
+  "vulnTable": {
+    "type": "유형",
+    "severity": "위험도"
+  },
+  "tokenBalance": {
+    "remaining": "남은 토큰",
+    "low": "부족",
+    "monthlyTotal": " / 이번 달 {{amount}}토큰",
+    "held": "진행 중인 스캔이 {{amount}}토큰 예약해 뒀어요.",
+    "purchasedCarryover": "이 중 충전분 {{amount}}토큰은 다음 달로 이월돼요."
+  },
+  "tourOverlay": {
+    "closeGuide": "가이드 닫기",
+    "previous": "이전",
+    "skip": "건너뛰기",
+    "next": "다음",
+    "start": "시작하기"
+  },
+  "tour": {
+    "newScan": {
+      "title": "여기서 스캔을 시작해요",
+      "desc": "웹사이트 URL은 DAST(동적 분석), GitHub 레포는 SAST(정적 분석)로 검사할 수 있어요."
+    },
+    "usage": {
+      "title": "사용량을 한눈에",
+      "desc": "DAST·SAST·PR 자동분석 사용량과 한도를 확인해요. 한도를 넘으면 여기 표시돼요."
+    },
+    "tokenBalance": {
+      "title": "토큰 현황",
+      "desc": "이번 달 받은 토큰과 남은 잔액을 확인해요. 진행 중인 스캔이 예약해 둔 토큰도 여기 표시돼요."
+    },
+    "recentScans": {
+      "title": "최근 스캔 기록",
+      "desc": "실행한 스캔 목록이에요. 완료된 스캔을 누르면 취약점 상세 리포트로 이동해요."
+    },
+    "integrations": {
+      "title": "GitHub 레포 연동",
+      "desc": "GitHub를 연동하면 레포 전체 SAST 분석과 PR 자동 분석을 쓸 수 있어요."
+    },
+    "pricing": {
+      "title": "Pro, 지금 무료로 써보세요",
+      "desc": "베타 기간에는 Pro 요금제를 무료로 체험할 수 있어요. 요금제에서 Pro를 선택해 \"결제하기\"를 눌러도 실제로 청구되지 않으니 편하게 눌러보세요."
+    },
+    "account": {
+      "title": "마이페이지",
+      "desc": "플랜·토큰 잔액을 확인하고, 베타 테스트 설문에 참여할 수 있어요."
+    }
+  },
+  "errorReport": {
+    "title": "오류 신고",
+    "notConfigured": "오류 신고 기능이 아직 설정되지 않았어요.",
+    "submitted": "오류 신고가 접수되었습니다",
+    "submitFailed": "신고 접수에 실패했어요. 잠시 후 다시 시도해 주세요.",
+    "close": "닫기",
+    "description": "겪으신 오류나 불편한 점을 적어주시면 팀에 바로 전달돼요.",
+    "placeholder": "어떤 문제가 있었나요?",
+    "send": "보내기",
+    "openAria": "오류 신고 열기",
+    "closeAria": "오류 신고 닫기"
+  }
+}

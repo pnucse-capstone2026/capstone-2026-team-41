@@ -1,0 +1,75 @@
+# Standalone analysis host. Backend and ZAP remain on their existing EC2 hosts.
+# Run from scanops-infra with the reviewed sibling scanops-model checkout.
+services:
+  model-api:
+    platform: linux/amd64
+    build:
+      context: ../scanops-model
+      dockerfile: Dockerfile.rebuild-api
+    environment:
+      SCANOPS_API_KEY: ${SCANOPS_API_KEY:?Set a shared backend/model key}
+      SCANOPS_JAVA_ENGINE: cpg-qwen38-ensemble
+      SCANOPS_JAVA_ONLY: "on"
+      SCANOPS_MAX_CONCURRENT_ANALYSES: "1"
+      SCANOPS_MAX_REQUEST_FILES: "50"
+      SCANOPS_MAX_FILE_CHARS: "200000"
+      SCANOPS_MAX_TOTAL_CHARS: "500000"
+      SCANOPS_META: "off"
+      JOERN_HTTP_URL: http://joern-worker:8200
+      GRAPH_SPEC_ENABLED: "on"
+      GRAPH_SPEC_RULEGEN_CONTEXT: v2
+      GRAPH_SPEC_RULEGEN_ENABLED: "off"
+      GRAPH_SPEC_DYNAMIC_RULE_MODE: ${GRAPH_SPEC_DYNAMIC_RULE_MODE:?Select shadow or enforce explicitly}
+      GRAPH_SPEC_CRITIC_ENABLED: "off"
+      GRAPH_SPEC_DYNAMIC_SANITIZER_ENABLED: "off"
+      GRAPH_SPEC_DYNAMIC_PROPAGATION_ENABLED: "off"
+      GRAPH_SPEC_LLM_MODEL: qwen3.8-max
+      GRAPH_SPEC_LLM_MAX_WORKERS: "1"
+      GRAPH_SPEC_JOERN_TIMEOUT: "630"
+      GRAPH_SPEC_RULEGEN_TIMEOUT: "120"
+      GRAPH_SPEC_API_CACHE: /data/java_api_cache.json
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:?Set the DashScope key}
+      DASHSCOPE_BASE_URL: ${DASHSCOPE_BASE_URL:?Set the verified DashScope compatible-mode URL}
+      # Non-Java requests are legacy and must not be enabled in the Java demo.
+      RUNPOD_ENDPOINT_ID: ""
+      RUNPOD_API_KEY: ""
+    ports:
+      - "${JAVA_ENGINE_BIND_IP:?Set the analysis EC2 private interface IP}:8100:8100"
+    volumes:
+      - java-rule-cache:/data
+    depends_on:
+      joern-worker:
+        condition: service_healthy
+    mem_limit: 1536m
+    memswap_limit: 1536m
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8100/health',timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+  joern-worker:
+    platform: linux/amd64
+    build:
+      context: ../scanops-model
+      dockerfile: joern/Dockerfile
+    command: ["python3", "-m", "uvicorn", "joern.handler_joern:app", "--host", "0.0.0.0", "--port", "8200"]
+    environment:
+      RUNPOD_MODE: "0"
+      JOERN_HTTP: "1"
+      JOERN_XMX: 3g
+      JAVA_OPTS: -Xmx3g
+      _JAVA_OPTIONS: -Xmx3g
+      JOERN_RSS_LIMIT_MB: "4608"
+      JOERN_REPO_TIMEOUT: "600"
+    mem_limit: 5g
+    memswap_limit: 5g
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8200/health',timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+volumes:
+  java-rule-cache:

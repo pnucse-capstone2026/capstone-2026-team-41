@@ -1,0 +1,47 @@
+{
+  "page": {
+    "title": "스캔 기록",
+    "subtitle": "완료된 스캔을 클릭하면 보고서를 볼 수 있어요 · 결과는 1개월간 보관됩니다",
+    "newScan": "새 스캔"
+  },
+  "filter": {
+    "all": "전체"
+  },
+  "search": {
+    "placeholder": "대상 검색"
+  },
+  "status": {
+    "done": "완료",
+    "running": "진행 중",
+    "pending": "대기 중",
+    "failed": "실패"
+  },
+  "list": {
+    "loadError": "스캔 기록을 불러오지 못했어요. 백엔드 연결 상태를 확인해 주세요.",
+    "retry": "다시 시도",
+    "emptyFiltered": "조건에 맞는 스캔이 없어요.",
+    "emptyAll": "아직 스캔 기록이 없어요.",
+    "startFirst": "첫 번째 스캔을 시작해보세요 →",
+    "item": {
+      "vulnCount": "· 취약점 {{count}}건",
+      "lines": "· {{count}}줄",
+      "deleteAriaLabel": "스캔 기록 삭제"
+    }
+  },
+  "pagination": {
+    "totalLabel": "전체",
+    "totalSuffix": "건",
+    "prev": "이전",
+    "next": "다음"
+  },
+  "toast": {
+    "deleteSuccess": "스캔 기록을 삭제했어요",
+    "deleteFail": "삭제에 실패했어요. 잠시 후 다시 시도해 주세요."
+  },
+  "deleteModal": {
+    "title": "스캔 기록 삭제",
+    "body": "의 스캔 기록과 발견된 취약점이 모두 삭제돼요. 이 작업은 되돌릴 수 없어요.",
+    "cancel": "취소",
+    "confirm": "삭제"
+  }
+}

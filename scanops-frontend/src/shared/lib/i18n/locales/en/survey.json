@@ -1,0 +1,119 @@
+{
+  "back": "Back",
+  "next": "Next",
+  "submit": "Submit",
+  "intro": {
+    "titleLine1": "Takes 1 minute.",
+    "titleLine2": "Tell us about your beta experience!",
+    "subtitleLine1": "A short survey to help us make ScanOps better.",
+    "subtitleLine2": "There are no wrong answers.",
+    "rewardTitle": "Complete the whole survey and",
+    "rewardPre": "at launch you'll get ",
+    "rewardBold": "30,000 lines of SAST tokens",
+    "rewardSuffix": ".",
+    "meta": "About 1 min · 11 questions",
+    "start": "Start survey"
+  },
+  "done": {
+    "titleLine1": "Survey complete!",
+    "titleLine2": "Thank you 🙏",
+    "descLine1": "We'll use what you shared to make ScanOps",
+    "descLine2": "more useful.",
+    "descLine3": "We'll send 30,000 lines of SAST tokens at launch.",
+    "exit": "Back to my page"
+  },
+  "questions": {
+    "priorToolUsed": {
+      "eyebrow": "Experience",
+      "title": "Have you used a security scanning service\nother than ScanOps before?",
+      "options": { "없다": "No", "있다": "Yes" },
+      "followUpPlaceholder": "Which service did you use?"
+    },
+    "comparisonVsPrior": {
+      "eyebrow": "Comparison",
+      "title": "Compared to the service you used before,\nwhat did ScanOps do better or worse?",
+      "placeholder": "Feel free to write anything"
+    },
+    "purpose": {
+      "eyebrow": "Purpose",
+      "title": "If you use a security scanning service,\nwhat do you use (or plan to use) it for?",
+      "options": {
+        "배포전점검": "Pre-deployment checks",
+        "실서비스보안점검": "Security checks for a live service",
+        "개인깃허브점검": "Personal GitHub security checks"
+      }
+    },
+    "role": {
+      "eyebrow": "Role",
+      "title": "If you're on a team, what is your\nrole on it?",
+      "options": {
+        "개발자": "Developer",
+        "CTO": "CTO",
+        "기획자": "Product Manager",
+        "보안담당자": "Security Lead",
+        "디자이너": "Designer",
+        "기타": "Other"
+      },
+      "followUpPlaceholder": "Please tell us your role"
+    },
+    "reportClarity": {
+      "eyebrow": "Report",
+      "title": "Was the scan report (results screen)\neasy to understand?",
+      "options": {
+        "매우쉬움": "Very easy",
+        "쉬움": "Easy",
+        "보통": "Neutral",
+        "어려움": "Difficult",
+        "매우어려움": "Very difficult"
+      }
+    },
+    "falsePositive": {
+      "eyebrow": "False positives",
+      "title": "Among the vulnerabilities found, were there any\nyou judged not to actually be issues (false positives)?",
+      "options": { "없다": "No", "있다": "Yes" },
+      "followUpPlaceholder": "Which part felt like a false positive?"
+    },
+    "continueIntent": {
+      "eyebrow": "Continued use",
+      "title": "Would you like to keep using ScanOps\neven after the beta test ends?",
+      "options": { "예": "Yes", "아니오": "No" },
+      "followUpPlaceholder": "Please tell us why"
+    },
+    "recommendIntent": {
+      "eyebrow": "Recommendation",
+      "title": "Would you recommend ScanOps\nto a fellow developer?",
+      "options": {
+        "전혀아니다": "Not at all",
+        "고민된다": "I'd have to think about it",
+        "추천하겠다": "I would recommend it"
+      }
+    },
+    "likedPoints": {
+      "eyebrow": "Feedback",
+      "title": "What did you like\nabout ScanOps?",
+      "placeholder": "Feel free to write anything"
+    },
+    "wishFeature": {
+      "eyebrow": "Suggestion",
+      "title": "If you subscribed to ScanOps, is there any feature you'd like\nadded or improved?",
+      "placeholder": "Feel free to write anything"
+    },
+    "missedVuln": {
+      "eyebrow": "Detection",
+      "title": "Was there a vulnerability you already knew about\nthat ScanOps failed to detect?",
+      "options": { "없다": "No", "있다": "Yes" },
+      "followUpPlaceholder": "Which vulnerability was it?"
+    },
+    "scanSpeed": {
+      "eyebrow": "Speed",
+      "title": "Are you satisfied with\nthe scan speed?",
+      "options": {
+        "매우느림": "Very slow",
+        "느린편": "Somewhat slow",
+        "적당함": "Reasonable",
+        "빠른편": "Somewhat fast",
+        "매우빠름": "Very fast"
+      }
+    }
+  }
+}

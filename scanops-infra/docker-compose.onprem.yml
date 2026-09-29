@@ -1,0 +1,234 @@
+# ScanOps 온프레미스 — 외부 호출 0 (에어갭 가능)
+# ============================================================
+# docker-compose.rebuild.yml 과의 차이:
+#   - RunPod 를 쓰지 않는다. GPU/CPU 추론은 컨테이너 안 llama-server 가 담당한다.
+#     (api_rebuild 는 RUNPOD_ENDPOINT_ID 가 비면 LLAMA_SERVER_URL 로 폴백한다 —
+#      scanops-model/scanops/core/llm_client.py:30-50)
+#   - Joern 워커를 HTTP 모드로 함께 띄운다 (SaaS 는 RunPod serverless, 온프렘은 이 컨테이너).
+#   - 외부 LLM 키(OPENAI/CLAUDE/GEMINI)와 GitHub 연동 값을 **명시적으로 빈 문자열**로 둔다.
+#     빈 값이면 백엔드 AiRouter 가 CUSTOM(자체 모델) 경로만 쓴다.
+#
+# 프로파일:
+#   (기본)      backend + postgres + model-api + joern-worker
+#   llm         llama-server 포함 (GGUF 파일이 로컬에 있어야 함)
+#   gpu         llama-server CUDA 빌드
+#   zap         DAST
+#   qdrant      RAG 참고 CVE (판정 미관여)
+#
+# 기동:
+#   docker compose -f docker-compose.onprem.yml --env-file .env.onprem up -d
+#   docker compose -f docker-compose.onprem.yml --profile llm --profile zap up -d
+
+services:
+  backend:
+    build:
+      context: ../scanops-backend
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8080
+      JDBC_DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-scanops}
+      PGUSER: ${POSTGRES_USER:-scanops}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-scanops}
+      SCANOPS_MODEL_URL: http://model-api:8100
+      SCANOPS_API_KEY: ${SCANOPS_API_KEY:-onprem-local-key}
+      ZAP_HOST: ${ZAP_HOST:-http://zap:8090}
+      ZAP_API_KEY: ${ZAP_API_KEY:-onprem-zap-key}
+      # ── 외부 호출 차단: 전부 빈 값 ──────────────────────────────────────
+      OPENAI_API_KEY: ""
+      CLAUDE_API_KEY: ""
+      GEMINI_API_KEY: ""
+      GITHUB_APP_ID: ""
+      GITHUB_APP_PRIVATE_KEY: ""
+      GITHUB_WEBHOOK_SECRET: ""
+      GITHUB_TOKEN: ""
+      # OAuth 는 비우면 부팅이 실패한다(“Client id must not be empty”) → 더미 값 주입.
+      # 온프레미스는 사내 IdP/로컬 계정을 쓰는 것을 전제로 한다(§12 결정사항).
+      GITHUB_OAUTH_CLIENT_ID: ${GITHUB_OAUTH_CLIENT_ID:-onprem-dummy}
+      GITHUB_OAUTH_CLIENT_SECRET: ${GITHUB_OAUTH_CLIENT_SECRET:-onprem-dummy}
+      GITHUB_OAUTH_REDIRECT_URI: ${GITHUB_OAUTH_REDIRECT_URI:-http://localhost:8080/login/oauth2/code/github}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5173}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres: {condition: service_healthy}
+      model-api: {condition: service_healthy}
+    healthcheck:
+      # Spring actuator 가 없을 수 있어 포트 개방만 확인한다(가장 약한 가정).
+      test: ["CMD-SHELL", "timeout 2 bash -c '</dev/tcp/127.0.0.1/8080' || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 90s
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+  # ── 분석 API (api_rebuild) — RunPod 미사용, 로컬 llama-server 로 폴백 ──────
+  model-api:
+    build:
+      context: ../scanops-model
+      dockerfile: Dockerfile.rebuild-api
+    environment:
+      PORT: 8100
+      SCANOPS_API_KEY: ${SCANOPS_API_KEY:-onprem-local-key}
+      # ★ 비워야 RunPod 로 나가지 않는다 (llm_client.use_runpod() == False)
+      RUNPOD_ENDPOINT_ID: ""
+      RUNPOD_API_KEY: ""
+      LLAMA_SERVER_URL: http://llama-server:8080
+      SCANOPS_META: ${SCANOPS_META:-on}
+      QDRANT_URL: ${QDRANT_URL:-}
+      # Joern 워커 주소. 단일-file 레거시 경로와 Java 레포 CPG가 같은 워커를 쓴다.
+      SCANOPS_JOERN_URL: http://joern-worker:8200
+      SCANOPS_HYBRID_POLICY: ${SCANOPS_HYBRID_POLICY:-JOERN-NO-BETTER}
+      SCANOPS_JAVA_ENGINE: ${SCANOPS_JAVA_ENGINE:-cpg-qwen38}
+      SCANOPS_HYBRID_DELTA: ${SCANOPS_HYBRID_DELTA:-}
+      SCANOPS_HYBRID_TAU: ${SCANOPS_HYBRID_TAU:-}
+      SCANOPS_JOERN_TIMEOUT: ${SCANOPS_JOERN_TIMEOUT:-120}
+      GRAPH_SPEC_ENABLED: ${GRAPH_SPEC_ENABLED:-on}
+      JOERN_HTTP_URL: http://joern-worker:8200
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      DASHSCOPE_BASE_URL: ${DASHSCOPE_BASE_URL:-https://dashscope-intl.aliyuncs.com/compatible-mode/v1}
+      GRAPH_SPEC_LLM_MODEL: ${GRAPH_SPEC_LLM_MODEL:-qwen3.8-max}
+      GRAPH_SPEC_LLM_MAX_WORKERS: ${GRAPH_SPEC_LLM_MAX_WORKERS:-6}
+      GRAPH_SPEC_RULEGEN_BATCH: ${GRAPH_SPEC_RULEGEN_BATCH:-20}
+      GRAPH_SPEC_RULEGEN_TIMEOUT: ${GRAPH_SPEC_RULEGEN_TIMEOUT:-600}
+      GRAPH_SPEC_DYNAMIC_RULE_MODE: ${GRAPH_SPEC_DYNAMIC_RULE_MODE:-shadow}
+      GRAPH_SPEC_CRITIC_ENABLED: ${GRAPH_SPEC_CRITIC_ENABLED:-off}
+      GRAPH_SPEC_API_CACHE: /data/graph_spec_api_cache.json
+    ports:
+      - "8100:8100"
+    depends_on:
+      joern-worker: {condition: service_healthy}
+    volumes:
+      - graph-spec-onprem-cache:/data
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8100/health',timeout=3).status==200 else 1)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+  # ── Joern CPG 워커 (HTTP 모드) ────────────────────────────────────────────
+  joern-worker:
+    # 빌드 대신 push 된 이미지를 쓴다(에어갭 환경에선 사전에 docker pull/load).
+    # 이 이미지에는 JS 프론트엔드용 astgen 이 이미 포함돼 있다
+    # (/opt/joern/joern-cli/frontends/jssrc2cpg/bin/astgen/astgen-linux — 2026-08-17 확인).
+    image: ${JOERN_IMAGE:-hansekim31/scanops-joern-worker:final}
+    build:
+      context: ../scanops-model
+      dockerfile: joern/Dockerfile
+    command: ["python3", "-m", "uvicorn", "joern.handler_joern:app",
+              "--host", "0.0.0.0", "--port", "8200"]
+    environment:
+      RUNPOD_MODE: "0"
+      JOERN_HTTP: "1"
+      JOERN_XMX: ${JOERN_XMX:-4g}
+      JAVA_OPTS: -Xmx${JOERN_XMX:-4g}
+      _JAVA_OPTIONS: -Xmx${JOERN_XMX:-4g}
+      JOERN_CHUNK: ${JOERN_CHUNK:-25}
+      JOERN_CASE_TIMEOUT: ${JOERN_CASE_TIMEOUT:-90}
+      JOERN_WORK_ROOT: /tmp
+    # CPG 는 메모리를 많이 쓴다 — JVM 힙 + 오버헤드
+    mem_limit: ${JOERN_MEM_LIMIT:-8g}
+    tmpfs:
+      # exec 필수: Joern 은 /tmp 아래에서 zstd 네이티브 바이너리를 실행한다.
+      # 기본 tmpfs 는 noexec 라 CPG 생성이 통째로 실패한다
+      # ("the configured temp directory (/tmp) is mounted with `noexec` flag" —
+      #  2026-08-17 온프레미스 기동 중 실측, 모든 요청이 unknown 이 됐다).
+      - /tmp:size=4g,exec
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8200/health',timeout=3).status==200 else 1)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+  # ── 로컬 LLM 서빙 (GGUF) ─────────────────────────────────────────────────
+  llama-server:
+    profiles: ["llm"]
+    image: ghcr.io/ggml-org/llama.cpp:server
+    # LORA_ARG 는 어댑터를 얹을 때만 값을 넣는다(비우면 베이스 단독).
+    # 프로덕션 판정 서식(4줄)은 **어댑터가 있어야** 나온다 — 베이스 단독이면 전부 미탐.
+    command: >
+      -m /models/${GGUF_FILE:-scanops-rebuild-9b-q4km.gguf}
+      ${LORA_ARG:-}
+      -c ${LLAMA_CTX:-8192} --parallel ${LLAMA_PARALLEL:-2}
+      --host 0.0.0.0 --port 8080
+    volumes:
+      - ${GGUF_DIR:-./models}:/models:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 40
+      start_period: 120s
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+  llama-server-cuda:
+    profiles: ["gpu"]
+    image: ghcr.io/ggml-org/llama.cpp:server-cuda
+    command: >
+      -m /models/${GGUF_FILE:-scanops-rebuild-9b-q4km.gguf}
+      ${LORA_ARG:-}
+      -ngl 99 -c ${LLAMA_CTX:-8192} --parallel ${LLAMA_PARALLEL:-2}
+      --host 0.0.0.0 --port 8080
+    volumes:
+      - ${GGUF_DIR:-./models}:/models:ro
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+  zap:
+    profiles: ["zap"]
+    image: ghcr.io/zaproxy/zaproxy:stable
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8090
+      -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+      -config api.key=${ZAP_API_KEY:-onprem-zap-key}
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+  qdrant:
+    profiles: ["qdrant"]
+    image: qdrant/qdrant:latest
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-scanops}
+      POSTGRES_USER: ${POSTGRES_USER:-scanops}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-scanops}
+    volumes:
+      - postgres-onprem-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-scanops} -d ${POSTGRES_DB:-scanops}"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    networks: [scanops-onprem]
+    restart: unless-stopped
+
+networks:
+  scanops-onprem:
+    driver: bridge
+
+volumes:
+  postgres-onprem-data:
+  qdrant-data:
+  graph-spec-onprem-cache:

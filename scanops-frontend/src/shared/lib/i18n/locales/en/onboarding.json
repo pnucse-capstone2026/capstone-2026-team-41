@@ -1,0 +1,40 @@
+{
+  "steps": {
+    "connectGithub": "Connect GitHub",
+    "chooseStart": "Choose how to start"
+  },
+  "loginRequired": "Please log in first",
+  "step0": {
+    "greeting": "Welcome, {{name}} 👋",
+    "desc": "Connect GitHub to instantly use full-repo (SAST) and PR analysis.",
+    "connectedTitle": "@{{login}} connected",
+    "connectTitle": "Connect GitHub account",
+    "connectedSub": "You can now use repo and PR analysis.",
+    "connectSub": "We only request read access.",
+    "connectButton": "Connect",
+    "later": "Do this later",
+    "next": "Next"
+  },
+  "step1": {
+    "title": "What would you like to do first?",
+    "desc": "Start your first security check the way you prefer.",
+    "options": {
+      "website": {
+        "tag": "DAST · 1 free scan",
+        "title": "Scan a website",
+        "sub": "Dynamic analysis of a running site"
+      },
+      "repo": {
+        "tag": "SAST",
+        "title": "Analyze a GitHub repo",
+        "sub": "Full static analysis of the source code"
+      },
+      "dashboard": {
+        "tag": "Explore",
+        "title": "Go to dashboard",
+        "sub": "Check out sample reports and usage first"
+      }
+    },
+    "back": "Back"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "title": "My Page",
+  "settings": "Settings",
+  "plan": {
+    "suffix": "Plan",
+    "popular": "Popular",
+    "teamWallet": "Shared team wallet",
+    "change": "Change plan",
+    "free": "Free",
+    "nextBilling": "Next billing date {{date}}"
+  },
+  "capacity": {
+    "website": "Website scans",
+    "websiteUnit": "more available",
+    "source": "Source code scans",
+    "sourceUnit": "more lines available",
+    "topUp": "Top up"
+  },
+  "survey": {
+    "title": "Beta test survey",
+    "done": "Thanks for taking part.",
+    "todo": "Takes just a minute. Tell us about your experience.",
+    "doneBadge": "Done",
+    "doneButton": "Survey completed",
+    "startButton": "Take the survey"
+  },
+  "quickLinks": {
+    "integrations": { "title": "Manage integrations", "sub": "GitHub & App connection" },
+    "team": { "title": "Manage team", "sub": "Members & permissions" },
+    "billing": { "title": "Billing", "sub": "Plan & receipts" },
+    "reports": { "title": "Scan history", "sub": "Past reports" }
+  },
+  "topUp": {
+    "titleDast": "Top up DAST (website scans)",
+    "titleToken": "Top up tokens (SAST & actions)",
+    "cancel": "Cancel",
+    "pay": "Pay {{amount}}",
+    "descDast": "Top up {{count}} website scans for {{price}}. Unused scans roll over to next month.",
+    "descToken": "Top up {{count}} tokens for {{price}}. Unused tokens roll over to next month.",
+    "units": "Units",
+    "amount": "Top-up amount",
+    "amountDast": "{{count}} scans",
+    "amountToken": "{{count}} tokens",
+    "price": "Total price",
+    "success": "Topped up {{amount}}",
+    "failure": "Top-up failed"
+  }
+}

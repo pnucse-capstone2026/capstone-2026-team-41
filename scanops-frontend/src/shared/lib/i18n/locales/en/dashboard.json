@@ -1,0 +1,32 @@
+{
+  "greeting": "Hello, {{name}}",
+  "subtitle": "Stay safe today. Check your recent security status.",
+  "newScan": "Start new scan",
+  "usage": {
+    "dastLabel": "DAST web scans remaining",
+    "sastLabel": "SAST · GitHub Actions remaining",
+    "unitCount": "",
+    "unitLines": " lines",
+    "perMonth": " / {{limit}}{{unit}} per month",
+    "low": "Running low"
+  },
+  "tokenStatus": {
+    "title": "Token status",
+    "myPage": "My page"
+  },
+  "engine": {
+    "title": "ScanOps Engine",
+    "desc": "Java uses Joern CPG with Qwen3.8-Max, while other languages use the existing analysis engine.",
+    "externalLabel": "Java semantic review",
+    "externalValue": "DashScope",
+    "methodLabel": "Detection method",
+    "methodValue": "Hybrid"
+  },
+  "recent": {
+    "title": "Recent scans",
+    "viewAll": "View all",
+    "done": "Done",
+    "failed": "Failed",
+    "inProgress": "In progress"
+  }
+}

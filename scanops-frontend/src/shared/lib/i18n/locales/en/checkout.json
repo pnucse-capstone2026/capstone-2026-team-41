@@ -1,0 +1,28 @@
+{
+  "done": {
+    "title": "Payment complete",
+    "desc": "You've been upgraded to the {{planName}} plan. Redirecting to your dashboard…"
+  },
+  "form": {
+    "title": "Payment details",
+    "desc": "Processed securely with encryption. (Mock payment)",
+    "cardNumber": "Card number",
+    "expiry": "Expiry",
+    "cvc": "CVC",
+    "cardHolder": "Cardholder name"
+  },
+  "summary": {
+    "title": "Order summary",
+    "planSuffix": "plan",
+    "vat": "VAT (10%)",
+    "total": "Total",
+    "trialSuffix": "then you'll be charged",
+    "payFree": "Start for free",
+    "payButton": "Pay {{amount}}",
+    "cancelAnytime": "Cancel anytime"
+  },
+  "toast": {
+    "started": "Your {{planName}} plan has started",
+    "failed": "Payment failed"
+  }
+}

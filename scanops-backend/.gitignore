@@ -1,0 +1,28 @@
+.gradle/
+build/
+*.class
+# 빌드 산출물 jar만 제외 (gradle-wrapper.jar는 포함)
+build/**/*.jar
+!gradle/wrapper/gradle-wrapper.jar
+.env
+.env.local
+*.log
+.DS_Store
+HELP.md
+
+# 다른 레포/Python 모델 자산은 이 백엔드 레포에서 추적하지 않음 (각자 별도 레포)
+scripts/
+scanops-backend/
+scanops-frontend/
+scanops-infra/
+scanops-model/
+__pycache__/
+*.pyc
+
+# 비밀키/인증서 (커밋 금지)
+*.pem
+*.key
+*private-key*
+
+# IDE compiled resources
+bin/

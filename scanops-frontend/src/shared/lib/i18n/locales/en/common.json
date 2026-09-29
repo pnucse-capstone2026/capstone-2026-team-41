@@ -1,0 +1,117 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "scan": "Scan",
+    "scanHistory": "Scan History",
+    "integrations": "Integrations",
+    "pricing": "Pricing"
+  },
+  "newScan": "New Scan",
+  "accountMenu": "Account menu",
+  "menu": {
+    "mypage": "My Page",
+    "settings": "Settings",
+    "billing": "Plan & Billing",
+    "restartTour": "Restart Guide",
+    "logout": "Log Out"
+  },
+  "modes": {
+    "WEBSITE": { "label": "Website" },
+    "GITHUB_REPO": { "label": "Full Repo" },
+    "GITHUB_ACTIONS": { "label": "PR Analysis" }
+  },
+  "plans": {
+    "FREE": { "desc": "Sign up and try it right away", "dast": "1 free scan", "sastActions": "Not supported", "highlight": "Results kept for 1 month" },
+    "PRO": { "desc": "For solo developers and vibe coders", "dast": "5 / month", "sastActions": "100K lines / month", "highlight": "AI briefing · PDF reports", "trial": "7-day free trial" },
+    "MAX": { "desc": "For individuals with larger codebases", "dast": "30 / month", "sastActions": "400K lines / month", "highlight": "Priority analysis queue" },
+    "TEAM": { "desc": "For 3-5 person startup teams · 3 seats included", "dast": "20 / month", "sastActions": "330K lines / month", "highlight": "Member & role management" }
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "error": "Something went wrong"
+  },
+  "auth": {
+    "genericError": "The request failed. Please try again."
+  },
+  "input": {
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "modal": {
+    "close": "Close"
+  },
+  "cvssGauge": {
+    "title": "Highest CVSS Score"
+  },
+  "vulnChart": {
+    "title": "Vulnerabilities by Severity"
+  },
+  "vulnTable": {
+    "type": "Type",
+    "severity": "Severity"
+  },
+  "tokenBalance": {
+    "remaining": "Tokens remaining",
+    "low": "Low",
+    "monthlyTotal": " / {{amount}} tokens this month",
+    "held": "A scan in progress has reserved {{amount}} tokens.",
+    "purchasedCarryover": "{{amount}} of that is purchased tokens rolling over to next month."
+  },
+  "tourOverlay": {
+    "closeGuide": "Close guide",
+    "previous": "Previous",
+    "skip": "Skip",
+    "next": "Next",
+    "start": "Get Started"
+  },
+  "tour": {
+    "newScan": {
+      "title": "Start a scan here",
+      "desc": "Scan a website URL with DAST (dynamic analysis), or a GitHub repo with SAST (static analysis)."
+    },
+    "usage": {
+      "title": "Usage at a glance",
+      "desc": "Track your DAST, SAST, and PR auto-analysis usage against your limits. You'll see it here if you go over."
+    },
+    "tokenBalance": {
+      "title": "Token balance",
+      "desc": "Check the tokens you received this month and what's left. Tokens reserved by scans in progress show up here too."
+    },
+    "recentScans": {
+      "title": "Recent scans",
+      "desc": "A list of the scans you've run. Click a completed scan to view its detailed vulnerability report."
+    },
+    "integrations": {
+      "title": "Connect a GitHub repo",
+      "desc": "Connect GitHub to run full-repo SAST analysis and automatic PR analysis."
+    },
+    "pricing": {
+      "title": "Try Pro free, right now",
+      "desc": "During the beta, you can try the Pro plan for free. Selecting Pro and clicking \"Checkout\" won't actually charge you, so feel free to give it a try."
+    },
+    "account": {
+      "title": "My Page",
+      "desc": "Check your plan and token balance, and take part in the beta survey."
+    }
+  },
+  "errorReport": {
+    "title": "Report an Issue",
+    "notConfigured": "Issue reporting isn't set up yet.",
+    "submitted": "Your report has been submitted",
+    "submitFailed": "Failed to submit your report. Please try again in a moment.",
+    "close": "Close",
+    "description": "Let us know about any issues or friction you've run into — it goes straight to the team.",
+    "placeholder": "What went wrong?",
+    "send": "Send",
+    "openAria": "Open issue report",
+    "closeAria": "Close issue report"
+  }
+}

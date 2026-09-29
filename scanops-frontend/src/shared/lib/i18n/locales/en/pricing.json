@@ -1,0 +1,52 @@
+{
+  "header": {
+    "login": "Log in",
+    "signup": "Start for free"
+  },
+  "hero": {
+    "badge": "Pricing",
+    "title": "Pay only for what you need",
+    "desc": "Sign up to try one free DAST scan. Pro includes a 7-day free trial, and every plan can be canceled anytime."
+  },
+  "personal": {
+    "title": "Personal plans",
+    "sub": "For starting out solo or on a small team"
+  },
+  "team": {
+    "title": "Team plan",
+    "sub": "Limits grow together as your team grows",
+    "addonTitle": "Adding members",
+    "addonDesc": "Rates and limits scale up together each time you add a member beyond the base 3.",
+    "memberCount": "Members",
+    "memberCountValue": "3 included",
+    "addon": {
+      "member": "Add a member",
+      "memberValue": "+₩20,000 per member",
+      "dast": "DAST web scans",
+      "dastValue": "+7 per month",
+      "sastActions": "SAST · GitHub App actions",
+      "sastActionsValue": "+230K lines per month"
+    }
+  },
+  "overage": {
+    "title": "Pay-as-you-go over the limit",
+    "sub": "Pay extra only for what you actually use, as you go",
+    "sastActions": "SAST · GitHub App actions",
+    "sastActionsValue": "₩5,000 per 10K lines",
+    "dast": "DAST web scans",
+    "dastValue": "₩5,000 per 3 scans"
+  },
+  "footnote": "LOC (lines of code) limits are provisional, based on beta-period measurements, and serve as a safeguard to control SAST/GitHub App processing costs.",
+  "card": {
+    "notSupported": "Not supported",
+    "dast": "DAST web scans",
+    "sastActions": "SAST · GitHub App actions",
+    "highlight": "Key benefit",
+    "popular": "Popular",
+    "current": "Current plan",
+    "betaLocked": "Coming during beta",
+    "using": "In use",
+    "startFree": "Start for free",
+    "startPlan": "Start {{name}}"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "title": "마이페이지",
+  "settings": "설정",
+  "plan": {
+    "suffix": "플랜",
+    "popular": "인기",
+    "teamWallet": "팀 공유 지갑",
+    "change": "플랜 변경",
+    "free": "무료",
+    "nextBilling": "다음 결제일 {{date}}"
+  },
+  "capacity": {
+    "website": "웹사이트 점검",
+    "websiteUnit": "회 더 가능",
+    "source": "소스코드 점검",
+    "sourceUnit": "줄 더 가능",
+    "topUp": "충전"
+  },
+  "survey": {
+    "title": "베타 테스트 설문",
+    "done": "참여해주셔서 감사해요.",
+    "todo": "1분이면 끝나요. 사용 경험을 들려주세요.",
+    "doneBadge": "완료",
+    "doneButton": "설문 완료",
+    "startButton": "설문 참여하기"
+  },
+  "quickLinks": {
+    "integrations": { "title": "연동 관리", "sub": "GitHub·App 연결" },
+    "team": { "title": "팀 관리", "sub": "멤버·권한 초대" },
+    "billing": { "title": "결제·청구", "sub": "플랜·영수증" },
+    "reports": { "title": "스캔 기록", "sub": "지난 리포트" }
+  },
+  "topUp": {
+    "titleDast": "DAST(웹 점검) 충전",
+    "titleToken": "토큰(SAST·액션) 충전",
+    "cancel": "취소",
+    "pay": "{{amount}} 결제하기",
+    "descDast": "{{price}}에 웹사이트 점검 {{count}}회를 충전해요. 이월되어 다음 달에도 쓸 수 있어요.",
+    "descToken": "{{price}}에 {{count}}토큰을 충전해요. 이월되어 다음 달에도 쓸 수 있어요.",
+    "units": "구좌 수",
+    "amount": "충전량",
+    "amountDast": "{{count}}회",
+    "amountToken": "{{count}}토큰",
+    "price": "결제 금액",
+    "success": "{{amount}} 충전됐어요",
+    "failure": "충전에 실패했어요"
+  }
+}

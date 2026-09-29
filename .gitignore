@@ -1,0 +1,8 @@
+.DS_Store
+**/.env
+**/.env.local
+**/.env.java
+**/.env.aws
+**/node_modules/
+**/.venv/
+**/__pycache__/

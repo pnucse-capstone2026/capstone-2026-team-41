@@ -1,0 +1,1 @@
+{"language":"Python","file_path":"ping.py","code":"import os\nfrom flask import request\n\ndef ping():\n    host = request.args.get('host')\n    os.system('ping -c 1 ' + host)\n    return 'ok'\n"}

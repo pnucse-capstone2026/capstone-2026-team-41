@@ -1,0 +1,139 @@
+{
+  "scanPage": {
+    "title": "New Security Scan",
+    "subtitle": "Choose what to scan and how. Every scan runs after ownership verification."
+  },
+  "scanForm": {
+    "modeSub": {
+      "WEBSITE": "Dynamic analysis of a running app",
+      "GITHUB_REPO": "Full static analysis of source code",
+      "GITHUB_ACTIONS": "Automatic PR diff checks"
+    },
+    "errors": {
+      "verifyStartFailed": "Failed to start verification. Please try again in a moment.",
+      "fileNotFound": "Couldn't find the file. Please double-check the path and contents.",
+      "checkFailed": "Verification failed. Please make sure the file is publicly accessible.",
+      "noDastLeft": "You've used all your DAST scans for this month. Recharge or wait until next month.",
+      "noSastLeft": "You don't have enough SAST lines left. Recharge or wait until next month.",
+      "repoOwnershipRequired": "GitHub repo ownership verification is required.",
+      "domainVerifyRequired": "Domain ownership verification is required.",
+      "scanRequestFailed": "Failed to request the scan. Please check your backend connection."
+    },
+    "toast": {
+      "domainVerified": "Domain verified",
+      "copied": "Copied"
+    },
+    "actions": {
+      "description": "GitHub Actions analysis runs automatically once you install the ScanOps App on the repo.",
+      "subDescription": "Changed code is checked automatically every time a PR is opened.",
+      "installButton": "Install App / Manage Integrations"
+    },
+    "labels": {
+      "repo": "GitHub Repository",
+      "targetUrl": "Target URL",
+      "email": "Email for results"
+    },
+    "github": {
+      "notConnected": "GitHub connection required.",
+      "connectButton": "Connect"
+    },
+    "repoOwnership": {
+      "verified": "Confirmed owned by @{{login}}",
+      "notOwned": "This repo isn't owned by @{{login}}. You'll need to install the App.",
+      "installButton": "Install App"
+    },
+    "verifiedBox": {
+      "title": "Ownership verified"
+    },
+    "usage": {
+      "sastPrefix": "SAST this month:",
+      "sastUnit": "lines",
+      "sastSuffix": "left",
+      "dastPrefix": "DAST scans:",
+      "dastCount": "{{count}}",
+      "dastSuffix": "left"
+    },
+    "warnings": {
+      "dastExhausted": "You've used all your DAST scans for this month.",
+      "sastLow": "You don't have enough SAST lines left.",
+      "rechargeButton": "Recharge"
+    },
+    "privateRepo": {
+      "title": "You can scan private repos too.",
+      "installHint": "Install the ScanOps App on that repo —",
+      "installButton": "Install App",
+      "selectHint": "screen, choose",
+      "selectHint2": "and select the private repos you want to scan."
+    },
+    "submit": {
+      "repoButton": "Start Repo Analysis",
+      "scanButton": "Start Scan"
+    },
+    "domainVerify": {
+      "enterUrlHint": "Enter a target URL to start domain ownership verification.",
+      "selfScanVerified": "ScanOps's own service — ownership verification skipped",
+      "wellKnownVerified": "Domain ownership confirmed via .well-known file",
+      "required": "Domain ownership verification is required.",
+      "startButton": "Verify",
+      "stepsTitle": "Domain Ownership Verification — Follow These Steps",
+      "stepsSubtitle": "This confirms the site is really yours. Just three quick steps.",
+      "domainFallback": "domain",
+      "step1": {
+        "title": "Create the verification file",
+        "textBeforeCode1": "In your project's",
+        "textAfterCode1": "folder, create a new file at the exact path below.",
+        "textBeforeCode2": "Next.js, Vite, React, and vibe-coding templates all",
+        "textAfterCode2": "serve files under it at the site's URL as-is."
+      },
+      "step2": {
+        "title": "Paste this token as the only line in that file and save"
+      },
+      "step3": {
+        "title": "After deploying, check that this URL opens",
+        "hint": "You're all set once the token above shows up on the page."
+      },
+      "aiHelperTitle": "If building it yourself is hard, just tell an AI like Cursor, v0, or Lovable this",
+      "aiPrompt": "In the project's public folder, create a file at .well-known/scanops-verify.txt containing exactly one line: \"{{token}}\". Then deploy it.",
+      "checkButton": "Verify",
+      "checkHint": "Click after your deployment finishes"
+    },
+    "copy": {
+      "ariaLabel": "Copy"
+    }
+  },
+  "statusPage": {
+    "stages": {
+      "web": {
+        "connect": "Connecting to target and crawling",
+        "scan": "Dynamic vulnerability scan (ZAP)",
+        "analyze": "AI analysis and risk scoring",
+        "report": "Generating report"
+      },
+      "code": {
+        "fetch": "Fetching repository",
+        "analyze": "Language-specific static analysis",
+        "taint": "Merging CPG and semantic-review results",
+        "report": "Generating report"
+      }
+    },
+    "targetFallback": "Target analysis",
+    "realScanSuffix": " · Live scan",
+    "completedTitle": "Analysis complete!",
+    "inProgressTitle": "Analyzing",
+    "failed": {
+      "title": "Scan failed",
+      "defaultReason": "The target may be unreachable, or the scanner may have hit an error. Please try again in a moment.",
+      "privateRepoNotice1": "To scan a private repo, you'll need to install",
+      "privateRepoNotice2": "on that repo. On the install screen, choose",
+      "privateRepoNotice3": "and select the repo you want to scan. (“All repositories” includes public repos too, but you can explicitly pick private ones as well.)",
+      "installAppButton": "Go Install App",
+      "historyButton": "Scan History",
+      "retryButton": "Scan Again"
+    },
+    "footer": {
+      "webRealNotice": "A live dynamic scan can take a few minutes. It keeps running even if you leave this page.",
+      "codeRealNotice": "Repository analysis can take longer for larger codebases. It keeps running if you leave this page.",
+      "mockNotice": "Repository code is processed through ScanOps; Java semantic-review context is sent to the DashScope Qwen API."
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "title": "Integrations",
+  "subtitle": "Connect GitHub to scan entire repos (SAST) and get automatic PR analysis.",
+  "githubAccount": {
+    "title": "GitHub account",
+    "connectedAs": "Connected as @{{login}}",
+    "notConnected": "Not connected yet",
+    "connected": "Connected",
+    "disconnect": "Disconnect",
+    "connect": "Connect",
+    "loginRequired": "Please log in first",
+    "disconnected": "Disconnected"
+  },
+  "app": {
+    "title": "ScanOps GitHub App",
+    "badge": "Automatic PR analysis",
+    "desc": "Once installed, every PR is automatically scanned and the results are posted as a comment.",
+    "privateNote": "This App is also required to scan private repos (SAST).",
+    "installScreen": "On the install screen, choose",
+    "privateNoteRest": "and select the private repos you want to scan.",
+    "onlySelectRepos": "\"Only select repositories\"",
+    "install": "Install App"
+  },
+  "repos": {
+    "title": "My repositories",
+    "subtitle": "Public repos you own can be SAST-scanned right away.",
+    "searchPlaceholder": "Search repos",
+    "fetchError": "Couldn't load your GitHub repo list.",
+    "emptyNotConnected": "Connect GitHub to see your repo list.",
+    "emptySearch": "No matching repos.",
+    "emptyOwned": "No public repos owned by you.",
+    "updatedAt": "updated",
+    "scan": "Scan"
+  }
+}
