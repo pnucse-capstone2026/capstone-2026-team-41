@@ -81,7 +81,7 @@
       "zoomOut": "Zoom out",
       "fit": "Fit view",
       "counts": "{{nodes}} nodes · {{edges}} edges",
-      "context": "Actual Joern code structure and flow around the AI-reported location. This context does not confirm the vulnerability.",
+      "context": "Include surrounding code",
       "error": "The graph could not be displayed. Use the node selector below to inspect code.",
       "graphDescription": "CPG nodes connected by directional arrows. Nodes can also be selected from the list below.",
       "noEdges": "No edges of this type in the selected scope. Include surrounding code or choose another edge type.",
@@ -100,7 +100,8 @@
         "RETURN": "Return statement",
         "CONTROL_STRUCTURE": "Control structure"
       },
-      "anchor": "No call node at reported line {{requested}}; showing context around nearby line {{anchor}}."
+      "anchor": "No call node at reported line {{requested}}; showing context around nearby line {{anchor}}.",
+      "contextExplanation": "Actual Joern code structure and flow around the AI-reported location. This context does not confirm the vulnerability."
     }
   }
 }
