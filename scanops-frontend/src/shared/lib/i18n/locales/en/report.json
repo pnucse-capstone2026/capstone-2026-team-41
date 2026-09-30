@@ -18,24 +18,19 @@
     "foundCount": "{{count}} vulnerabilities found",
     "toast": {
       "pdfReady": "Your PDF report is ready",
-      "copied": "Copied"
-    }
+      "copied": "Copied",
+      "copyFailed": "Copy failed. Check your browser clipboard permissions."
+    },
+    "loadError": "Unable to load the report. Please try again."
   },
   "vuln": {
     "plainLabel": "In plain terms",
     "evidence": "Evidence",
-    "attackScenario": "Attack Scenario",
+    "attackScenario": "Possible attack scenario",
     "fixMethod": "How to Fix",
     "locationLabel": "Location:",
     "copyFixPrompt": "Copy AI Fix Prompt",
     "copyAriaLabel": "Copy",
-    "detectionBasis": "Detection Basis",
-    "confidence": "Confidence {{value}}%",
-    "verdict": {
-      "confirmed": "Graph Confirmed",
-      "suppressed": "Graph Verified",
-      "llmOnly": "AI Detected"
-    },
     "fixPrompt": {
       "intro": "Explain how to fix the following security vulnerability, with an example tailored to my code.",
       "vulnLabel": "[Vulnerability]",
@@ -44,6 +39,33 @@
       "problemLabel": "[Problem]",
       "fixLabel": "[Recommended Fix]",
       "outro": "Write out the specific fix code and configuration (headers/options, etc.) step by step."
+    },
+    "reference": "View official description",
+    "locationUnknown": "Location was not provided.",
+    "typeDescription": "Attack type",
+    "source": {
+      "title": "Source location",
+      "target": "Finding at line {{line}}",
+      "snapshot": "Code at scan time · up to five lines before and after the finding",
+      "current": "Code fetched from the repository; it may differ from the scanned version.",
+      "loading": "Loading surrounding code…",
+      "unavailable": "No saved excerpt or the original file is unavailable. Rescan to capture the code at scan time.",
+      "open": "View file on GitHub",
+      "notProvided": "This finding does not include source code and line numbers."
+    },
+    "cpg": {
+      "title": "CPG code flow",
+      "open": "Select a node to inspect code",
+      "noData": "No saved path",
+      "unavailable": "No CPG path was saved for this finding. Rescan after this feature is enabled to view paths detected by CPG. AI-only findings do not include a CPG path.",
+      "data-flow": "A data-flow path extracted from CPG: input → propagation → use. Select a node to inspect code captured during the scan. This is the relevant path, not the entire CPG.",
+      "call-site": "A call site detected in CPG. This result does not establish an input-to-sink data-flow path.",
+      "partial-flow": "A partial path returned by the analyzer. The full connection to the final use is not included.",
+      "source": "Input",
+      "intermediate": "Propagation",
+      "sink": "Use",
+      "snapshot": "Code at scan time",
+      "recorded": "Code recorded by the analyzer"
     }
   }
 }

@@ -1,3 +1,5 @@
+import CpgGraphView from './CpgGraphView'
+import SourceContextView from './SourceContextView'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -12,34 +14,41 @@ import {
   fetchReport, MODE_META, SEVERITY_META, formatDateTime,
   type Report, type Vulnerability, type Severity, type SeverityCounts,
 } from '../../../shared/lib/mock'
+import { weaknessReference } from '../../../shared/lib/cweMeta'
 import { useModeLabel } from '../../../shared/lib/planText'
 import { isRealId, fetchRealReport } from '../../../shared/api/scan'
 
 const SEV_ORDER: Severity[] = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'INFO']
 
-// The API does not yet return a per-scan engine identifier. Keep this label accurate for
-// both routes: Java uses CPG + Qwen3.8-Max, while other languages retain the legacy engine.
-const SAST_ENGINE_LABEL = 'ScanOps SAST (언어별 분석 엔진)'
-
-export default function ReportPage() {
-  const { t } = useTranslation('report')
+export default function ReportPage({ previewReport }: { previewReport?: Report } = {}) {
+  const { t, i18n } = useTranslation('report')
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { toast } = useToast()
-  const [report, setReport] = useState<Report | null>(null)
+  const requestKey = `${id}:${i18n.language}`
+  const [result, setResult] = useState<{ key: string; report: Report | null; error: boolean } | null>(null)
+  const report = previewReport ?? (result?.key === requestKey ? result.report : null)
+  const loadError = !previewReport && result?.key === requestKey && result.error
   const modeLabel = useModeLabel(report?.mode ?? 'WEBSITE')
 
   useEffect(() => {
+    if (previewReport) return
     if (!id) return
+    let active = true
     const load = isRealId(id) ? fetchRealReport(id) : fetchReport(id)
-    load.then(setReport).catch(() => fetchReport('s-1041').then(setReport))
-  }, [id])
+    load.then((report) => { if (active) setResult({ key: requestKey, report, error: false }) }).catch(() => { if (active) setResult({ key: requestKey, report: null, error: true }) })
+    return () => { active = false }
+  }, [id, requestKey, previewReport])
+
+  if (loadError) return (
+    <div className="min-h-screen bg-surface"><AppNav /><main className="max-w-[980px] mx-auto px-6 py-12"><Card pad="lg"><h1 className="text-xl font-bold">{t('detail.loadError')}</h1><Button className="mt-4" onClick={() => navigate('/reports')}>{t('back')}</Button></Card></main></div>
+  )
 
   if (!report) {
     return (
       <div className="min-h-screen bg-surface">
         <AppNav />
-        <main className="max-w-[860px] mx-auto px-6 py-8 flex flex-col gap-4">
+        <main className="max-w-[980px] mx-auto px-6 py-8 flex flex-col gap-4">
           <div className="h-7 w-40 rounded skeleton" />
           <div className="h-32 rounded-2xl skeleton" />
           <div className="h-24 rounded-2xl skeleton" />
@@ -54,7 +63,7 @@ export default function ReportPage() {
   return (
     <div className="min-h-screen bg-surface">
       <AppNav />
-      <main className="max-w-[860px] mx-auto px-6 py-7 fade-up">
+      <main className="max-w-[980px] mx-auto px-4 sm:px-6 py-8 sm:py-10 fade-up">
         <button onClick={() => navigate('/reports')} className="flex items-center gap-1 text-[13px] text-ink-muted font-medium hover:text-ink-sub mb-4">
           <Icon name="chevron-left" size={16} /> {t('back')}
         </button>
@@ -71,7 +80,7 @@ export default function ReportPage() {
                 <span style={{ color: m.color }}><Icon name={m.icon} size={20} /></span>{report.target}
               </h1>
               <p className="mt-1 text-[13px] text-ink-muted">
-                {t('detail.analysisLabel')} {report.durationSec ? t('detail.seconds', { value: report.durationSec }) : ''}{report.loc ? ` · ${t('detail.lines', { value: report.loc.toLocaleString('ko-KR') })}` : ''} · {t('detail.engineLabel')} {report.mode === 'WEBSITE' ? t('detail.engineWebsite') : SAST_ENGINE_LABEL}
+                {t('detail.analysisLabel')} {report.durationSec ? t('detail.seconds', { value: report.durationSec }) : ''}{report.loc ? ` · ${t('detail.lines', { value: report.loc.toLocaleString('ko-KR') })}` : ''}
               </p>
             </div>
             <div className="flex gap-2">
@@ -85,7 +94,7 @@ export default function ReportPage() {
           <div className="flex items-center gap-6 flex-wrap">
             <Stat value={String(report.total)} label={t('detail.stats.vulnerabilities')} />
             <div className="w-px h-10 bg-line" />
-            <Stat value={report.maxCvss.toFixed(1)} label={t('detail.stats.maxCvss')} color={report.maxCvss >= 9 ? 'var(--color-sev-critical)' : 'var(--color-sev-high)'} />
+            <Stat value={report.maxCvss > 0 ? report.maxCvss.toFixed(1) : '—'} label={t('detail.stats.maxCvss')} color={report.maxCvss <= 0 ? 'var(--color-ink-muted)' : report.maxCvss >= 9 ? 'var(--color-sev-critical)' : 'var(--color-sev-high)'} />
             <div className="w-px h-10 bg-line" />
             <div className="flex-1 min-w-[200px]">
               <SeverityBar counts={report.counts} total={report.total} />
@@ -136,83 +145,63 @@ function SeverityBar({ counts, total }: { counts: SeverityCounts; total: number 
   )
 }
 
-const VERDICT: Record<Vulnerability['graphVerdict'], { key: string; tone: 'success' | 'brand' | 'neutral' }> = {
-  CONFIRMED: { key: 'confirmed', tone: 'success' },
-  SUPPRESSED: { key: 'suppressed', tone: 'neutral' },
-  LLM_ONLY: { key: 'llmOnly', tone: 'brand' },
-}
-
 function VulnCard({ v, defaultOpen, onCopy }: { v: Vulnerability; defaultOpen?: boolean; onCopy: () => void }) {
   const { t } = useTranslation('report')
+  const { toast } = useToast()
   const [open, setOpen] = useState(defaultOpen)
   const sev = SEVERITY_META[v.severity]
-  const verdict = VERDICT[v.graphVerdict]
+  const reference = weaknessReference(`${v.name} ${v.cwe}`)
 
   return (
-    <Card pad="none" className="overflow-hidden">
-      <button onClick={() => setOpen((o) => !o)} className="w-full flex items-center gap-3.5 px-5 py-4 text-left hover:bg-surface transition-colors">
+    <Card pad="none" className="overflow-hidden !rounded-2xl border-line-strong shadow-[0_4px_20px_-12px_rgba(25,31,40,0.18)]">
+      <button onClick={() => setOpen((o) => !o)} aria-expanded={Boolean(open)} aria-controls={`finding-${v.id}`} className="w-full flex items-start sm:items-center gap-3 px-5 sm:px-7 py-6 text-left hover:bg-surface transition-colors focus-visible:outline-2 focus-visible:outline-brand focus-visible:outline-offset-[-2px]">
         <span className="w-1.5 self-stretch rounded-full shrink-0" style={{ background: sev.color }} />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-[15px] font-bold text-ink">{v.name}</p>
+            <p className="text-[18px] font-bold text-ink">{v.name}</p>
             <span className="text-[12px] text-ink-muted font-medium">{v.cwe}</span>
           </div>
-          <p className="text-[12.5px] text-ink-muted truncate mt-0.5">{v.location}</p>
+
         </div>
         <SeverityBadge severity={v.severity} size="sm" />
-        <span className="text-[13px] font-bold tnum" style={{ color: sev.color }}>{v.cvss.toFixed(1)}</span>
+
         <Icon name={open ? 'chevron-up' : 'chevron-down'} size={18} className="text-ink-faint" />
       </button>
 
       {open && (
-        <div className="px-5 pb-5 pt-1 border-t border-line">
-          {/* 비전문가용 한 줄 설명 */}
-          {v.plain && (
-            <div className="mt-3 flex items-start gap-2.5 rounded-xl bg-brand-soft/60 px-4 py-3">
-              <span className="text-brand mt-0.5 shrink-0"><Icon name="info" size={16} /></span>
-              <p className="text-[13.5px] text-ink-sub leading-relaxed">
-                <span className="font-bold text-brand">{t('vuln.plainLabel')}</span>　{v.plain}
-              </p>
-            </div>
-          )}
-          {v.summary && <p className="text-[13.5px] text-ink-sub leading-relaxed mt-3">{v.summary}</p>}
-
-          {v.evidence && (
-            <Section icon="code" title={t('vuln.evidence')}>
-              <CodeBlock code={v.evidence} onCopy={onCopy} />
-              <p className="mt-2 text-[12px] text-ink-muted">{t('vuln.locationLabel')} <span className="font-medium text-ink-sub">{v.location}</span></p>
-            </Section>
-          )}
+        <div id={`finding-${v.id}`} className="px-5 sm:px-7 pb-7 pt-1 border-t border-line">
+          <Section icon="info" title={t('vuln.typeDescription')}>
+            <p className="rounded-xl bg-brand-soft/50 px-5 py-4 text-[15px] text-ink leading-7 break-keep">{v.plain}</p>
+          </Section>
+          <Section icon="code" title={t('vuln.source.title')}>
+            <SourceContextView v={v} />
+            {(v.cpgGraph || v.sourceContext || v.location.startsWith('https://github.com/')) && (
+              <div className="mt-4"><CpgGraphView key={v.id} graph={v.cpgGraph} /></div>
+            )}
+          </Section>
 
           {v.attack && (
             <Section icon="alert-triangle" title={t('vuln.attackScenario')} tone="danger">
-              <p className="text-[13.5px] text-ink-sub leading-relaxed">{v.attack}</p>
+              <p className="text-[15px] text-ink-sub leading-7 whitespace-pre-line">{v.attack}</p>
             </Section>
           )}
 
           {v.fix && (
             <Section icon="check-circle" title={t('vuln.fixMethod')} tone="success">
-              <p className="text-[13.5px] text-ink-sub leading-relaxed">{v.fix}</p>
+              <p className="text-[15px] text-ink-sub leading-7 whitespace-pre-line">{v.fix}</p>
               {v.fixCode && <div className="mt-2.5"><CodeBlock code={v.fixCode} onCopy={onCopy} good /></div>}
               <button
                 type="button"
-                onClick={() => { navigator.clipboard?.writeText(buildFixPrompt(v, t)); onCopy() }}
-                className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-white border border-success-soft text-success text-[12.5px] font-semibold hover:bg-success-soft transition-colors"
+                onClick={async () => { try { await navigator.clipboard.writeText(buildFixPrompt(v, t)); onCopy() } catch { toast(t('detail.toast.copyFailed'), 'danger') } }}
+                className="mt-3 inline-flex items-center gap-1.5 min-h-10 px-4 rounded-lg bg-brand text-white text-[13px] font-semibold hover:bg-brand-hover transition-colors"
               >
                 <Icon name="zap" size={13} /> {t('vuln.copyFixPrompt')}
               </button>
             </Section>
           )}
 
-          <div className="mt-4 pt-3 border-t border-line">
-            <p className="text-[11.5px] font-bold text-ink-muted mb-2">{t('vuln.detectionBasis')}</p>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge tone={verdict.tone} size="sm"><Icon name="shield" size={12} /> {t(`vuln.verdict.${verdict.key}`)}</Badge>
-              <Badge tone="neutral" size="sm"><Icon name="cpu" size={12} /> {v.aiModel}</Badge>
-              <Badge tone="neutral" size="sm">{t('vuln.confidence', { value: (v.confidence * 100).toFixed(0) })}</Badge>
-              <span className="ml-auto text-[11px] text-ink-faint font-mono hidden sm:block">{v.cvssVector}</span>
-            </div>
-          </div>
+          {reference && <a href={reference} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-1 text-[13px] font-semibold text-brand hover:underline">{t('vuln.reference')} <Icon name="arrow-right" size={14} /></a>}
+
         </div>
       )}
     </Card>
@@ -225,7 +214,7 @@ function buildFixPrompt(v: Vulnerability, t: TFunction): string {
     t('vuln.fixPrompt.intro'),
     '',
     `${t('vuln.fixPrompt.vulnLabel')} ${v.name}${v.cwe ? ` (${v.cwe})` : ''}`,
-    `${t('vuln.fixPrompt.severityLabel')} ${v.severity} · CVSS ${v.cvss.toFixed(1)}`,
+    `${t('vuln.fixPrompt.severityLabel')} ${v.severity}${v.cvss > 0 ? ` · CVSS ${v.cvss.toFixed(1)}` : ''}`,
     v.location ? `${t('vuln.fixPrompt.locationLabel')} ${v.location}` : '',
     v.summary ? `${t('vuln.fixPrompt.problemLabel')} ${v.summary}` : '',
     v.fix ? `${t('vuln.fixPrompt.fixLabel')} ${v.fix}` : '',
@@ -235,14 +224,14 @@ function buildFixPrompt(v: Vulnerability, t: TFunction): string {
 }
 
 function Section({ icon, title, tone, children }: { icon: Parameters<typeof Icon>[0]['name']; title: string; tone?: 'danger' | 'success'; children: React.ReactNode }) {
-  const color = tone === 'danger' ? 'var(--color-danger)' : tone === 'success' ? 'var(--color-success)' : 'var(--color-ink-sub)'
-  const box = tone === 'danger' ? 'bg-danger-soft/40' : tone === 'success' ? 'bg-success-soft/50' : ''
+  const color = tone === 'success' ? 'var(--color-brand-press)' : 'var(--color-ink)'
+  const box = tone === 'success' ? 'bg-brand-soft/60 border border-brand/15' : 'bg-surface border border-line'
   return (
-    <div className="mt-4">
-      <p className="flex items-center gap-1.5 text-[12.5px] font-bold mb-2" style={{ color }}>
+    <div className="mt-6">
+      <p className="flex items-center gap-1.5 text-[15px] font-bold mb-3" style={{ color }}>
         <Icon name={icon} size={14} /> {title}
       </p>
-      {tone ? <div className={`rounded-xl px-4 py-3 ${box}`}>{children}</div> : children}
+      {tone ? <div className={`rounded-xl px-4 sm:px-5 py-4 ${box}`}>{children}</div> : children}
     </div>
   )
 }

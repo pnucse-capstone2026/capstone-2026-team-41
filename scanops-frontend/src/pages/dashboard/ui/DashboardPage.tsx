@@ -13,17 +13,21 @@ import { MODE_META, relativeTime, type ScanSummary } from '../../../shared/lib/m
 import { fetchRecentScans } from '../../../shared/api/scan'
 import { fetchWallet, type TokenWallet } from '../../../shared/api/tokens'
 
-export default function DashboardPage() {
+export default function DashboardPage({ previewData }: { previewData?: { wallet: TokenWallet; scans: ScanSummary[] } } = {}) {
   const { t } = useTranslation('dashboard')
   const navigate = useNavigate()
   const { user } = useAuth()
-  const [scans, setScans] = useState<ScanSummary[] | null>(null)
-  const [wallet, setWallet] = useState<TokenWallet | null>(null)
+  const [loadedScans, setScans] = useState<ScanSummary[] | null>(null)
+  const [loadedWallet, setWallet] = useState<TokenWallet | null>(null)
 
   useEffect(() => {
+    if (previewData) return
     fetchRecentScans().then(setScans)
     fetchWallet().then(setWallet)
-  }, [])
+  }, [previewData])
+
+  const scans = previewData?.scans ?? loadedScans
+  const wallet = previewData?.wallet ?? loadedWallet
 
   // 마이페이지(MyPage)와 동일하게 "잔여"를 그대로 보여준다 — 지급량에서 역산한 "사용량"은
   // 충전·체험 보너스로 잔여가 월 한도를 넘는 경우 음수가 나와 마이페이지와 값이 어긋났다.
@@ -36,7 +40,7 @@ export default function DashboardPage() {
       <main className="max-w-[1080px] mx-auto px-6 py-8 fade-up">
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="text-[26px] font-bold text-ink tracking-tight">{t('greeting', { name: user?.name })}</h1>
+            <h1 className="text-[26px] font-bold text-ink tracking-tight">{t('greeting', { name: user?.name ?? (previewData ? '미리보기' : '') })}</h1>
             <p className="mt-1 text-[14.5px] text-ink-muted">{t('subtitle')}</p>
           </div>
           <Button data-tour="dashboard-new-scan" leftIcon="target" onClick={() => navigate('/scan')}>{t('newScan')}</Button>
@@ -48,9 +52,9 @@ export default function DashboardPage() {
           <UsageCard icon="box" label={t('usage.sastLabel')} remaining={sastRemaining} limit={wallet?.sourceLinesMonthlyLimit} unit={t('usage.unitLines')} color="var(--color-scan-code)" big />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+        <div className="mt-4">
           {/* token balance */}
-          <Card data-tour="posture-card" className="lg:col-span-2" pad="lg">
+          <Card data-tour="posture-card" pad="lg">
             <div className="flex items-center justify-between">
               <h2 className="text-[17px] font-bold text-ink">{t('tokenStatus.title')}</h2>
               <button onClick={() => navigate('/mypage')} className="text-[13px] text-brand font-semibold hover:underline flex items-center gap-1">
@@ -59,21 +63,6 @@ export default function DashboardPage() {
             </div>
             <div className="mt-4">
               <TokenBalance wallet={wallet} />
-            </div>
-          </Card>
-
-          {/* model edge */}
-          <Card pad="lg" className="bg-gradient-to-br from-[#f3f8ff] to-white border-brand-soft">
-            <div className="flex items-center gap-2 text-brand">
-              <Icon name="cpu" size={18} />
-              <span className="text-[13px] font-bold">{t('engine.title')}</span>
-            </div>
-            <p className="mt-2 text-[13.5px] text-ink-sub leading-relaxed">
-              {t('engine.desc')}
-            </p>
-            <div className="grid grid-cols-2 gap-2 mt-3">
-              <Mini label={t('engine.externalLabel')} value={t('engine.externalValue')} />
-              <Mini label={t('engine.methodLabel')} value={t('engine.methodValue')} />
             </div>
           </Card>
         </div>
@@ -151,14 +140,5 @@ function UsageCard({ icon, label, remaining, limit, unit, color, big }: { icon: 
       )}
       <ProgressBar value={pct} color={low ? 'var(--color-warning)' : color} className="mt-2.5" height={6} />
     </Card>
-  )
-}
-
-function Mini({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg bg-white border border-brand-soft px-3 py-2">
-      <p className="text-[11px] text-ink-muted">{label}</p>
-      <p className="text-[18px] font-bold text-brand tnum">{value}</p>
-    </div>
   )
 }

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './ProtectedRoute'
 import LandingPage from '../pages/landing/ui/LandingPage'
@@ -19,11 +20,14 @@ import PricingPage from '../pages/pricing/ui/PricingPage'
 import CheckoutPage from '../pages/checkout/ui/CheckoutPage'
 import { ENABLE_PRICING } from '../shared/lib/config'
 
+const DesignPreview = import.meta.env.DEV ? lazy(() => import('../pages/preview/DesignPreview')) : null
+
 const Protected = ({ children }: { children: React.ReactNode }) => <ProtectedRoute>{children}</ProtectedRoute>
 
 export default function AppRouter() {
   return (
     <Routes>
+      {DesignPreview && <Route path="/preview/:screen" element={<Suspense fallback={null}><DesignPreview /></Suspense>} />}
       {/* public */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />

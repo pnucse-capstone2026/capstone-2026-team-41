@@ -19,7 +19,6 @@
   },
   "stats": {
     "noExternalCode": { "value": "Java", "label": "Joern CPG + Qwen3.8-Max 앙상블" },
-    "falsePositiveRate": { "value": "2/2", "label": "취약·정상 Java 서버 시험 완료" },
     "hybrid": { "value": "37초", "label": "2파일 실제 사이트 통합 시험" },
     "threeModes": { "value": "3가지", "label": "DAST·SAST·PR 자동분석 한 번에" }
   },

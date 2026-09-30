@@ -14,14 +14,6 @@
     "title": "토큰 현황",
     "myPage": "마이페이지"
   },
-  "engine": {
-    "title": "ScanOps 엔진",
-    "desc": "Java는 Joern CPG와 Qwen3.8-Max로, 다른 언어는 기존 분석 엔진으로 검사해요.",
-    "externalLabel": "Java 의미 검토",
-    "externalValue": "DashScope",
-    "methodLabel": "탐지 방식",
-    "methodValue": "하이브리드"
-  },
   "recent": {
     "title": "최근 스캔",
     "viewAll": "전체 보기",

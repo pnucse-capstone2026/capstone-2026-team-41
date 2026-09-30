@@ -14,14 +14,6 @@
     "title": "Token status",
     "myPage": "My page"
   },
-  "engine": {
-    "title": "ScanOps Engine",
-    "desc": "Java uses Joern CPG with Qwen3.8-Max, while other languages use the existing analysis engine.",
-    "externalLabel": "Java semantic review",
-    "externalValue": "DashScope",
-    "methodLabel": "Detection method",
-    "methodValue": "Hybrid"
-  },
   "recent": {
     "title": "Recent scans",
     "viewAll": "View all",

@@ -19,7 +19,6 @@
   },
   "stats": {
     "noExternalCode": { "value": "Java", "label": "Joern CPG + Qwen3.8-Max ensemble" },
-    "falsePositiveRate": { "value": "2/2", "label": "Vulnerable and safe Java server checks completed" },
     "hybrid": { "value": "37 sec", "label": "Two-file live site integration check" },
     "threeModes": { "value": "3", "label": "DAST · SAST · PR auto-analysis, all in one" }
   },

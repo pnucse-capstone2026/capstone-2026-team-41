@@ -1,4 +1,7 @@
+import { parseCpgGraph } from '../lib/cpgGraph'
 import { http } from './httpClient'
+import i18n from '../lib/i18n'
+import { enrichCwe, readableAnalysis } from '../lib/cweMeta'
 import { enrichZap } from '../lib/zapMeta'
 import type { Report, ScanMode, ScanSummary, Severity, SeverityCounts, Vulnerability } from '../lib/mock'
 
@@ -34,6 +37,11 @@ interface BeVuln {
   cvssVector?: string | null
   cause?: string        // 기존 aiAnalysis/description 통합
   solution?: string
+  cpgGraph?: string | null
+  sourceSnippet?: string | null
+  sourceStartLine?: number | null
+  sourceLine?: number | null
+  sourcePath?: string | null
 }
 
 /** 백엔드가 만든 UUID인지(실 스캔) vs 목 id("s-1041")인지. */
@@ -139,23 +147,32 @@ function mapSeverity(risk?: string, cvss?: number | null): Severity {
   }
 }
 
-function mapVuln(v: BeVuln): Vulnerability {
+export function mapVuln(v: BeVuln): Vulnerability {
   const cvss = v.cvssScore ?? 0
-  const meta = enrichZap(v.vulnType || '') // 흔한 ZAP 경보 → 한국어 메타
+  const type = v.vulnType || ''
+  const meta = enrichCwe(type, i18n.language) ?? enrichZap(type)
+  const cause = readableAnalysis(v.cause)
+  const fix = readableAnalysis(v.solution)
+  const en = i18n.language.startsWith('en')
   return {
     id: v.vulnId,
     name: meta?.name ?? v.vulnType ?? '취약점',
-    cwe: meta?.cwe ?? '',
+    cwe: meta?.cwe ?? type.match(/\bCWE-\d+\b/i)?.[0].toUpperCase() ?? '',
     severity: mapSeverity(v.severity, cvss),
     cvss,
     cvssVector: v.cvssVector ?? '',
     location: [v.url, v.parameter].filter(Boolean).join(' → '),
     evidence: '',
-    // "쉽게 말하면": 사전 한 줄 → 백엔드 분석(cause) 순
-    plain: meta?.plain ?? '',
-    summary: meta?.summary ?? '',
-    attack: meta?.attack ?? v.cause ?? '',
-    fix: meta?.fix ?? v.solution ?? '',
+    sourceContext: v.sourceSnippet && v.sourceStartLine && v.sourceLine ? {
+      code: v.sourceSnippet, startLine: v.sourceStartLine, targetLine: v.sourceLine,
+      path: v.sourcePath ?? '', origin: 'scan',
+    } : undefined,
+    // Type definition is independent of the scan-specific attack analysis.
+    cpgGraph: parseCpgGraph(v.cpgGraph),
+    plain: meta?.plain ?? (en ? 'A security finding that needs review against the affected code or component.' : '해당 코드나 구성 요소의 영향 범위를 확인해야 하는 보안 점검 항목입니다.'),
+    summary: /\bCWE-/i.test(type) ? cause : (meta?.summary ?? ''),
+    attack: meta?.attack ?? (cause || (en ? 'The scan did not provide a verified scenario. Check the input path, access conditions, and affected version before assessing impact.' : '확인된 시나리오가 제공되지 않았습니다. 입력 경로·접근 조건·영향받는 버전을 먼저 확인하세요.')),
+    fix: fix || meta?.fix || (en ? 'Check the official advisory and affected version, then apply the recommended patch or mitigation and verify with a rescan.' : '공식 권고와 영향받는 버전을 확인한 뒤 권장 패치 또는 완화 조치를 적용하고 재검사하세요.'),
     aiModel: meta ? 'ZAP + AI' : 'ScanOps AI',
     confidence: 1,
     graphVerdict: 'LLM_ONLY',

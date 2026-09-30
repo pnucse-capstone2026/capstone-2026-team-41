@@ -25,7 +25,6 @@ export default function LandingPage() {
 
   const stats = [
     { value: t('stats.noExternalCode.value'), label: t('stats.noExternalCode.label') },
-    { value: t('stats.falsePositiveRate.value'), label: t('stats.falsePositiveRate.label') },
     { value: t('stats.hybrid.value'), label: t('stats.hybrid.label') },
     { value: t('stats.threeModes.value'), label: t('stats.threeModes.label') },
   ]
@@ -140,12 +139,12 @@ export default function LandingPage() {
       </header>
 
       {/* Stats */}
-      <section className="py-[120px] border-y border-line bg-surface">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+      <section className="py-16 sm:py-20 border-y border-line bg-surface">
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8 text-center">
           {stats.map((s) => (
             <div key={s.label}>
               <p className="text-[34px] sm:text-[44px] font-extrabold tracking-tight tnum">{s.value}</p>
-              <p className="mt-2 text-[14.5px] text-ink-muted break-keep">{s.label}</p>
+              <p className="mt-2 text-[14.5px] text-ink-sub break-keep">{s.label}</p>
             </div>
           ))}
         </div>

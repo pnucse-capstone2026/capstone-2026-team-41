@@ -1,3 +1,5 @@
+import type { CpgGraph } from './cpgGraph'
+import type { SourceContext } from './sourceContext'
 /**
  * Mock data layer (frontend-only). Simulates the ScanOps backend so every
  * screen works without a live API. Swap these accessors for real HTTP calls
@@ -36,6 +38,8 @@ export interface Vulnerability {
   cvssVector: string
   location: string
   evidence: string
+  cpgGraph?: CpgGraph
+  sourceContext?: SourceContext
   /** 비전문가도 이해하는 한 줄 설명 ("쉽게 말하면"). */
   plain: string
   summary: string
