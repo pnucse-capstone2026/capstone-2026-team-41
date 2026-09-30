@@ -17,6 +17,10 @@ export function githubSourceLocation(location: string) {
       url.port
     )
       return null
+    // Old backend appended /blob/HEAD to the user's full GitHub file URL.
+    // Repair only that known duplicated suffix, retaining the repository root.
+    const legacy = url.pathname.match(/^\/([^/]+)\/([^/]+)\/(?:blob|tree)\/.+\/blob\/HEAD\/(.+)$/)
+    if (legacy) url.pathname = `/${legacy[1]}/${legacy[2]}/blob/HEAD/${legacy[3]}`
     const match = url.pathname.match(/^\/([^/]+)\/([^/]+)\/blob\/([^/]+)\/(.+)$/)
     const targetLine = Number(url.hash.match(/^#L(\d+)(?:-L\d+)?$/)?.[1])
     if (!match || !Number.isSafeInteger(targetLine) || targetLine < 1) return null
