@@ -24,7 +24,14 @@ export default function CpgGraphView({ graph }: { graph?: CpgGraph }) {
         <p className="px-5 py-5 text-[14px] text-ink-sub leading-6">{t('vuln.cpg.unavailable')}</p>
       ) : (
         <div className="p-5 space-y-5">
-          <p className="text-[14px] text-ink-sub leading-6">{t(`vuln.cpg.${graph.kind}`)}</p>
+          <p className="text-[14px] text-ink-sub leading-6">
+            {t(graph.evidence === 'code-context' ? 'vuln.cpg.context' : `vuln.cpg.${graph.kind}`)}
+          </p>
+          {graph.evidence === 'code-context' && graph.requestedLine !== graph.anchorLine && (
+            <p className="text-[13px] text-ink-sub">
+              {t('vuln.cpg.anchor', { requested: graph.requestedLine, anchor: graph.anchorLine })}
+            </p>
+          )}
           {graph.truncated && <p className="text-[13px] text-ink-sub">{t('vuln.cpg.limited')}</p>}
           {open && (
             <Suspense fallback={<p className="h-96 p-5 text-ink-sub">{t('vuln.cpg.loading')}</p>}>

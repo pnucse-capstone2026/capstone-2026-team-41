@@ -12,6 +12,9 @@ export interface CpgGraph {
   version: 1 | 2
   kind: 'data-flow' | 'call-site' | 'partial-flow' | 'cpg'
   scope?: 'finding-neighborhood'
+  evidence?: 'code-context'
+  requestedLine?: number
+  anchorLine?: number
   truncated?: boolean
   nodes: CpgNode[]
   edges: { source: string; target: string; kind?: 'AST' | 'CFG' | 'REACHING_DEF' }[]
@@ -57,6 +60,17 @@ export function parseCpgGraph(raw: unknown): CpgGraph | undefined {
         return undefined
     }
     if (g.version === 2) {
+      if (
+        g.evidence != null &&
+        (g.evidence !== 'code-context' ||
+          g.origin !== 'joern' ||
+          !Number.isInteger(g.requestedLine) ||
+          g.requestedLine <= 0 ||
+          !Number.isInteger(g.anchorLine) ||
+          g.anchorLine <= 0 ||
+          g.nodes.some((n: CpgNode) => n.role !== 'intermediate'))
+      )
+        return undefined
       if (
         g.scope !== 'finding-neighborhood' ||
         typeof g.truncated !== 'boolean' ||

@@ -57,7 +57,7 @@
       "title": "CPG graph",
       "open": "Select a node to inspect code",
       "noData": "No saved path",
-      "unavailable": "No CPG path was saved for this finding. Rescan after this feature is enabled to view paths detected by CPG. AI-only findings do not include a CPG path.",
+      "unavailable": "No code graph is saved for this result. It may be an older scan, or graph extraction for this location was unavailable.",
       "data-flow": "A data-flow path extracted from CPG: input → propagation → use. Select a node to inspect code captured during the scan. This is the relevant path, not the entire CPG.",
       "call-site": "A call site detected in CPG. This result does not establish an input-to-sink data-flow path.",
       "partial-flow": "A partial path returned by the analyzer. The full connection to the final use is not included.",
@@ -81,7 +81,7 @@
       "zoomOut": "Zoom out",
       "fit": "Fit view",
       "counts": "{{nodes}} nodes · {{edges}} edges",
-      "context": "Include surrounding code",
+      "context": "Actual Joern code structure and flow around the AI-reported location. This context does not confirm the vulnerability.",
       "error": "The graph could not be displayed. Use the node selector below to inspect code.",
       "graphDescription": "CPG nodes connected by directional arrows. Nodes can also be selected from the list below.",
       "noEdges": "No edges of this type in the selected scope. Include surrounding code or choose another edge type.",
@@ -99,7 +99,8 @@
         "LOCAL": "Local variable",
         "RETURN": "Return statement",
         "CONTROL_STRUCTURE": "Control structure"
-      }
+      },
+      "anchor": "No call node at reported line {{requested}}; showing context around nearby line {{anchor}}."
     }
   }
 }

@@ -10,9 +10,13 @@ The graph is an induced, bounded neighborhood, **not the entire repository CPG**
 
 The UI initially shows the surrounding neighborhood with all edge types. Circular nodes use short code labels; full code remains in the selected-node panel. “Include surrounding code” can be disabled to focus on finding seeds. Filters distinguish data dependencies (`REACHING_DEF`), execution order (`CFG`), and parent-to-child code structure (`AST`). These edge types are not interchangeable. Isolated surrounding nodes are hidden in a filtered view; finding seeds remain visible even if a filter contains no connecting edge. The node dropdown provides a keyboard alternative to canvas clicks.
 
+## AI finding context
+
+After Java semantic analysis, one bounded context export per 128 targets imports the submitted Java repository and finds call nodes at each reported location. Blank/comment locations use a nearby call within five lines (next call preferred); `requestedLine` and `anchorLine` remain distinct and the UI discloses the offset. If no matching call exists or export fails, the finding remains without a fabricated graph. Context nodes all have `intermediate` roles, with `origin=joern` and `evidence=code-context`. Detection verdicts and reported line numbers are unchanged. This view is code context, not proof that the AI finding is exploitable.
+
 ## Storage and compatibility
 
-- `ScanopsModelClient.EngineFinding` preserves the per-finding `cpg_graph` through ensemble expansion. Semantic-only evidence is ineligible.
+- `ScanopsModelClient.EngineFinding` preserves the per-finding `cpg_graph` through ensemble expansion. AI findings retain their `qwen-*` source; a separate Joern context request attaches actual graph nodes and edges without claiming a proven taint path.
 - `GithubPipelineRunner` validates and stores the graph using the existing nullable `cpg_graph TEXT` column. No new database migration is needed.
 - The backend attaches source excerpts from submitted scan files (up to five lines before/after). It rejects invalid IDs, endpoints, edge types, and bounds; it never repairs malformed graphs with guessed edges.
 - Version 1 ordered paths remain supported and are displayed with their existing partial/call-site distinctions. Old scans require a **new scan** to obtain version 2 topology.
