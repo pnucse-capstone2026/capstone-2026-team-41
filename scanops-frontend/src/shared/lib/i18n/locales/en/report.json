@@ -54,7 +54,7 @@
       "notProvided": "This finding does not include source code and line numbers."
     },
     "cpg": {
-      "title": "CPG code flow",
+      "title": "CPG graph",
       "open": "Select a node to inspect code",
       "noData": "No saved path",
       "unavailable": "No CPG path was saved for this finding. Rescan after this feature is enabled to view paths detected by CPG. AI-only findings do not include a CPG path.",
@@ -65,7 +65,41 @@
       "intermediate": "Propagation",
       "sink": "Use",
       "snapshot": "Code at scan time",
-      "recorded": "Code recorded by the analyzer"
+      "recorded": "Code recorded by the analyzer",
+      "cpg": "Code surrounding this finding, extracted from Joern. Choose an edge type and select a node to inspect its code.",
+      "limited": "Some nodes or edges were omitted to keep this graph within the display limit.",
+      "loading": "Loading graph…",
+      "layers": "Edge types",
+      "edges": {
+        "REACHING_DEF": "Data flow",
+        "CFG": "Control flow",
+        "AST": "Code structure",
+        "all": "All",
+        "path": "Finding path"
+      },
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "fit": "Fit view",
+      "counts": "{{nodes}} nodes · {{edges}} edges",
+      "context": "Include surrounding code",
+      "error": "The graph could not be displayed. Use the node selector below to inspect code.",
+      "graphDescription": "CPG nodes connected by directional arrows. Nodes can also be selected from the list below.",
+      "noEdges": "No edges of this type in the selected scope. Include surrounding code or choose another edge type.",
+      "interaction": "Drag to move · Buttons to zoom · Select a node to inspect code",
+      "selectNode": "Select node",
+      "nodeTypes": {
+        "CALL": "Call",
+        "IDENTIFIER": "Variable",
+        "LITERAL": "Literal",
+        "METHOD": "Method",
+        "METHOD_PARAMETER_IN": "Input parameter",
+        "METHOD_PARAMETER_OUT": "Output parameter",
+        "METHOD_RETURN": "Return",
+        "BLOCK": "Code block",
+        "LOCAL": "Local variable",
+        "RETURN": "Return statement",
+        "CONTROL_STRUCTURE": "Control structure"
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 /** Development-only fixtures. This module is eliminated from production builds. */
+import cpgSample from './cpg-sample.json'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import ReportPage from '../report/ui/ReportPage'
@@ -65,7 +66,7 @@ export default function DesignPreview() {
   const mode = params.get('graph')
   const graphNodes =
     mode === 'callsite' ? nodes.slice(-1) : mode === 'partial' ? nodes.slice(0, 2) : nodes
-  const graph =
+  const legacyGraph =
     mode === 'missing'
       ? null
       : JSON.stringify({
@@ -75,11 +76,25 @@ export default function DesignPreview() {
           nodes: graphNodes,
           edges: graphNodes.slice(1).map((n, i) => ({ source: graphNodes[i].id, target: n.id })),
         })
-  const excerpt = excerptAround(source, 14, 'VulnerableServlet.java')!
+  const actual = !mode || mode === 'actual'
+  const graph = actual
+    ? JSON.stringify({
+        ...cpgSample.graph,
+        nodes: cpgSample.graph.nodes.map((node) => ({
+          ...node,
+          excerpt: excerptAround(cpgSample.source, node.line, node.file),
+        })),
+      })
+    : legacyGraph
+  const excerpt = excerptAround(
+    actual ? cpgSample.source : source,
+    actual ? 7 : 14,
+    actual ? 'Demo.java' : 'VulnerableServlet.java'
+  )!
   useTranslation('report') // rebuild localized fixtures when the language changes
   const report: Report = {
     id: 'preview',
-    target: 'VulnerableServlet.java',
+    target: actual ? 'Demo.java' : 'VulnerableServlet.java',
     mode: 'GITHUB_REPO',
     status: 'DONE',
     maxCvss: 0,
@@ -91,12 +106,12 @@ export default function DesignPreview() {
       mapVuln({
         vulnId: 'preview-cwe-79',
         vulnType: 'CWE-79',
-        url: 'VulnerableServlet.java#L14',
+        url: actual ? 'Demo.java#L7' : 'VulnerableServlet.java#L14',
         cpgGraph: graph,
         sourceSnippet: excerpt.code,
         sourceStartLine: excerpt.startLine,
         sourceLine: excerpt.targetLine,
-        sourcePath: 'VulnerableServlet.java',
+        sourcePath: actual ? 'Demo.java' : 'VulnerableServlet.java',
         cause:
           '파일: VulnerableServlet.java 줄번호: 12 공격: 탐지 출처: cpg 근거: CPG 정적 규칙 탐지 후보',
         solution:
@@ -107,7 +122,11 @@ export default function DesignPreview() {
   return (
     <>
       <div className="bg-brand-soft border-b border-brand/20 px-4 py-3 text-[13px] flex flex-wrap justify-center gap-x-5 gap-y-2">
-        <strong className="text-brand-press">로컬 디자인 미리보기 · 예시 데이터</strong>
+        <strong className="text-brand-press">
+          {actual
+            ? '로컬 미리보기 · 샘플 Java의 실제 Joern 분석 결과'
+            : '로컬 디자인 미리보기 · 예시 데이터'}
+        </strong>
         <Link className="underline" to="/">
           랜딩
         </Link>

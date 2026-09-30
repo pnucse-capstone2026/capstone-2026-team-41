@@ -1,0 +1,341 @@
+{
+  "source": "import javax.servlet.http.HttpServletRequest;\nimport javax.servlet.http.HttpServletResponse;\nimport java.io.IOException;\npublic class Demo {\n public void render(HttpServletRequest req, HttpServletResponse resp) throws IOException {\n  resp.setContentType(\"text/html\");\n  resp.getWriter().println(req.getParameter(\"q\"));\n }\n}\n",
+  "graph": {
+    "version": 2,
+    "kind": "cpg",
+    "scope": "finding-neighborhood",
+    "truncated": false,
+    "nodes": [
+      {
+        "id": "30064771075",
+        "role": "source",
+        "label": "CALL",
+        "file": "Demo.java",
+        "line": 7,
+        "code": "getParameter(\"q\")",
+        "onPath": true
+      },
+      {
+        "id": "30064771073",
+        "role": "sink",
+        "label": "CALL",
+        "file": "Demo.java",
+        "line": 7,
+        "code": "getWriter().println(req.getParameter(\"q\"))",
+        "onPath": true
+      },
+      {
+        "id": "68719476738",
+        "role": "intermediate",
+        "label": "IDENTIFIER",
+        "file": "Demo.java",
+        "line": 7,
+        "code": "req",
+        "onPath": false
+      },
+      {
+        "id": "90194313217",
+        "role": "intermediate",
+        "label": "LITERAL",
+        "file": "Demo.java",
+        "line": 7,
+        "code": "\"q\"",
+        "onPath": false
+      },
+      {
+        "id": "30064771074",
+        "role": "intermediate",
+        "label": "CALL",
+        "file": "Demo.java",
+        "line": 7,
+        "code": "getWriter()",
+        "onPath": false
+      },
+      {
+        "id": "124554051584",
+        "role": "intermediate",
+        "label": "METHOD_RETURN",
+        "file": "Demo.java",
+        "line": 5,
+        "code": "RET",
+        "onPath": false
+      },
+      {
+        "id": "25769803776",
+        "role": "intermediate",
+        "label": "BLOCK",
+        "file": "Demo.java",
+        "line": 5,
+        "code": "<empty>",
+        "onPath": false
+      },
+      {
+        "id": "115964116993",
+        "role": "intermediate",
+        "label": "METHOD_PARAMETER_OUT",
+        "file": "Demo.java",
+        "line": 5,
+        "code": "HttpServletRequest req",
+        "onPath": false
+      },
+      {
+        "id": "107374182400",
+        "role": "intermediate",
+        "label": "METHOD",
+        "file": "Demo.java",
+        "line": 5,
+        "code": "public void render(HttpServletRequest req, HttpServletResponse resp) throws IOException",
+        "onPath": false
+      },
+      {
+        "id": "111669149697",
+        "role": "intermediate",
+        "label": "METHOD_PARAMETER_IN",
+        "file": "Demo.java",
+        "line": 5,
+        "code": "HttpServletRequest req",
+        "onPath": false
+      },
+      {
+        "id": "68719476737",
+        "role": "intermediate",
+        "label": "IDENTIFIER",
+        "file": "Demo.java",
+        "line": 7,
+        "code": "resp",
+        "onPath": false
+      },
+      {
+        "id": "111669149696",
+        "role": "intermediate",
+        "label": "METHOD_PARAMETER_IN",
+        "file": "Demo.java",
+        "line": 5,
+        "code": "this",
+        "onPath": false
+      },
+      {
+        "id": "30064771072",
+        "role": "intermediate",
+        "label": "CALL",
+        "file": "Demo.java",
+        "line": 6,
+        "code": "setContentType(\"text/html\")",
+        "onPath": false
+      }
+    ],
+    "edges": [
+      {
+        "source": "30064771075",
+        "target": "68719476738",
+        "kind": "AST"
+      },
+      {
+        "source": "30064771075",
+        "target": "90194313217",
+        "kind": "AST"
+      },
+      {
+        "source": "30064771075",
+        "target": "30064771073",
+        "kind": "CFG"
+      },
+      {
+        "source": "30064771075",
+        "target": "30064771074",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "30064771075",
+        "target": "30064771073",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "30064771075",
+        "target": "124554051584",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "30064771073",
+        "target": "30064771074",
+        "kind": "AST"
+      },
+      {
+        "source": "30064771073",
+        "target": "30064771075",
+        "kind": "AST"
+      },
+      {
+        "source": "30064771073",
+        "target": "124554051584",
+        "kind": "CFG"
+      },
+      {
+        "source": "30064771073",
+        "target": "124554051584",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "68719476738",
+        "target": "90194313217",
+        "kind": "CFG"
+      },
+      {
+        "source": "68719476738",
+        "target": "115964116993",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "68719476738",
+        "target": "30064771075",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "68719476738",
+        "target": "124554051584",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "90194313217",
+        "target": "30064771075",
+        "kind": "CFG"
+      },
+      {
+        "source": "90194313217",
+        "target": "68719476738",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "90194313217",
+        "target": "30064771075",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "30064771074",
+        "target": "68719476737",
+        "kind": "AST"
+      },
+      {
+        "source": "30064771074",
+        "target": "68719476738",
+        "kind": "CFG"
+      },
+      {
+        "source": "30064771074",
+        "target": "30064771075",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "30064771074",
+        "target": "30064771073",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "30064771074",
+        "target": "124554051584",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "25769803776",
+        "target": "30064771072",
+        "kind": "AST"
+      },
+      {
+        "source": "25769803776",
+        "target": "30064771073",
+        "kind": "AST"
+      },
+      {
+        "source": "107374182400",
+        "target": "111669149696",
+        "kind": "AST"
+      },
+      {
+        "source": "107374182400",
+        "target": "111669149697",
+        "kind": "AST"
+      },
+      {
+        "source": "107374182400",
+        "target": "25769803776",
+        "kind": "AST"
+      },
+      {
+        "source": "107374182400",
+        "target": "124554051584",
+        "kind": "AST"
+      },
+      {
+        "source": "107374182400",
+        "target": "115964116993",
+        "kind": "AST"
+      },
+      {
+        "source": "107374182400",
+        "target": "68719476738",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "107374182400",
+        "target": "90194313217",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "107374182400",
+        "target": "68719476737",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "107374182400",
+        "target": "111669149697",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "107374182400",
+        "target": "111669149696",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "111669149697",
+        "target": "115964116993",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "111669149697",
+        "target": "68719476738",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "68719476737",
+        "target": "30064771074",
+        "kind": "CFG"
+      },
+      {
+        "source": "68719476737",
+        "target": "30064771074",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "68719476737",
+        "target": "124554051584",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "111669149696",
+        "target": "124554051584",
+        "kind": "REACHING_DEF"
+      },
+      {
+        "source": "30064771072",
+        "target": "68719476737",
+        "kind": "CFG"
+      },
+      {
+        "source": "30064771072",
+        "target": "124554051584",
+        "kind": "REACHING_DEF"
+      }
+    ]
+  },
+  "provenance": "Generated by local Joern 4.0.570 using taint_spec.sc, not a manually drawn graph."
+}

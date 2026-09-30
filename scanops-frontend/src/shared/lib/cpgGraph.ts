@@ -4,13 +4,17 @@ export interface CpgNode {
   file: string
   line: number
   code: string
+  label?: string
+  onPath?: boolean
   excerpt?: { code: string; startLine: number; targetLine: number } | null
 }
 export interface CpgGraph {
-  version: 1
-  kind: 'data-flow' | 'call-site' | 'partial-flow'
+  version: 1 | 2
+  kind: 'data-flow' | 'call-site' | 'partial-flow' | 'cpg'
+  scope?: 'finding-neighborhood'
+  truncated?: boolean
   nodes: CpgNode[]
-  edges: { source: string; target: string }[]
+  edges: { source: string; target: string; kind?: 'AST' | 'CFG' | 'REACHING_DEF' }[]
 }
 
 /** Do not render unknown graph contracts or make up missing edges. */
@@ -19,8 +23,8 @@ export function parseCpgGraph(raw: unknown): CpgGraph | undefined {
   try {
     const g = JSON.parse(raw)
     if (
-      g?.version !== 1 ||
-      !['data-flow', 'call-site', 'partial-flow'].includes(g.kind) ||
+      ![1, 2].includes(g?.version) ||
+      !(g.version === 2 ? ['cpg'] : ['data-flow', 'call-site', 'partial-flow']).includes(g.kind) ||
       !Array.isArray(g.nodes) ||
       !g.nodes.length ||
       g.nodes.length > 256 ||
@@ -51,6 +55,30 @@ export function parseCpgGraph(raw: unknown): CpgGraph | undefined {
           n.line >= n.excerpt.startLine + n.excerpt.code.split('\n').length)
       )
         return undefined
+    }
+    if (g.version === 2) {
+      if (
+        g.scope !== 'finding-neighborhood' ||
+        typeof g.truncated !== 'boolean' ||
+        g.nodes.length > 64 ||
+        g.edges.length > 256 ||
+        g.nodes.some((n: CpgNode) => typeof n.label !== 'string' || typeof n.onPath !== 'boolean')
+      )
+        return undefined
+      const edges = new Set<string>()
+      for (const e of g.edges) {
+        if (
+          !e ||
+          !ids.has(e.source) ||
+          !ids.has(e.target) ||
+          !['AST', 'CFG', 'REACHING_DEF'].includes(e.kind)
+        )
+          return undefined
+        const key = JSON.stringify([e.source, e.target, e.kind])
+        if (edges.has(key)) return undefined
+        edges.add(key)
+      }
+      return g as CpgGraph
     }
     if (
       g.edges.length !== g.nodes.length - 1 ||
